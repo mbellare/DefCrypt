@@ -1,0 +1,678 @@
+\usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+       \usepackage{multirow}
+\usepackage{setspace}
+\usepackage{xspace}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, shadows}
+\usetikzlibrary{trees}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.misc}
+\usepackage{amscd,amsmath}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{float}
+\usepackage{longtable}
+% \usepackage{amsthm}
+% conflict with proof environment
+\usepackage{color,colortbl}
+
+\DeclareMathAlphabet{\mathsl}{OT1}{cmr}{m}{sl}
+\DeclareMathAlphabet{\mathsc}{OT1}{cmr}{m}{sc}
+\DeclareMathAlphabet{\mathslbf}{OT1}{cmr}{bx}{sl}
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}%
+             {<-> s * [1] pzcmi7t}{}
+\DeclareMathAlphabet{\mathscript}{OT1}{pzc}{m}{it}
+\setlength{\fboxsep}{1pt}
+
+% ====================================================================
+
+\renewcommand{\topfraction}{0.99} 
+\renewcommand{\bottomfraction}{0.8}	
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{2}
+\setcounter{dbltopnumber}{2}    
+\renewcommand{\dbltopfraction}{0.9}	
+\renewcommand{\textfraction}{0.07}	
+\renewcommand{\floatpagefraction}{0.7}
+\renewcommand{\dblfloatpagefraction}{0.7}	
+\hyphenation{whe-ther}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{propo}[thm]{Proposition}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{egs}[thm]{Example}
+\newtheorem{nte}[thm]{Note}
+
+\newenvironment{theorem}{\begin{thm}}{\end{thm}}
+\newenvironment{lemma}{\begin{lem}}{\end{lem}}
+\newenvironment{corollary}{\begin{cor}}{\end{cor}}
+\newenvironment{proposition}{\begin{propo}\begin{rm}}{\end{rm}\end{propo}}
+\newenvironment{definition}{\begin{defn}}
+{\end{defn}}
+\newenvironment{claim}{\begin{clm}\begin{rm}}
+{\end{rm}\end{clm}}
+\newenvironment{remark}{\begin{rem}\begin{em}}
+{\end{em}\end{rem}}
+\newenvironment{example}{\begin{egs}\begin{em}}{\end{em}\end{egs}}
+\newenvironment{note}{\begin{nte}\begin{rm}}{\end{rm}\end{nte}}
+
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\apref}[1]{Appendix~\ref{#1}}
+\newcommand{\thref}[1]{Theorem~\ref{#1}}
+\newcommand{\defref}[1]{Definition~\ref{#1}}
+\newcommand{\corref}[1]{Corollary~\ref{#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{#1}}
+\newcommand{\clref}[1]{Claim~\ref{#1}}
+\newcommand{\propref}[1]{Proposition~\ref{#1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\renewcommand{\eqref}[1]{\mbox{Equation~(\ref{#1})}}
+
+
+\def\sqed{{\hspace{1pt}\rule[-1pt]{3pt}{9pt}}}
+\def\qedsym{\hspace{1pt}\rule[-1pt]{3pt}{9pt}}
+\newcommand{\mybox}{\raisebox{-1.5pt}{{\Large $\Box$}}}
+\def\enddef{{\sqed}}
+
+
+\newlength{\saveparindent}
+\setlength{\saveparindent}{\parindent}
+\newlength{\saveparskip}
+\setlength{\saveparskip}{\parskip}
+
+
+
+
+\def\qsym{\vrule width0.6ex height1em depth0ex}
+\newcount\proofqeded
+\newcount\proofended
+\def\qed{{\hspace{1pt}\rule[-1pt]{3pt}{9pt}}
+\end{rm}\addtolength{\parskip}{-0pt}
+\setlength{\parindent}{\saveparindent}
+\global\advance\proofqeded by 1 }
+\def\qedenv{
+\end{rm}\addtolength{\parskip}{-0pt}
+\setlength{\parindent}{\saveparindent}
+\global\advance\proofqeded by 1 }
+\newenvironment{proof}%
+ {\proofstart}%
+ {\ifnum\proofqeded=\proofended~\qed\fi \global\advance\proofended by 1
+  \medskip}
+\newenvironment{proofenv}%
+ {\proofenvstart}%
+ {\ifnum\proofqeded=\proofended\qedenv\fi \global\advance\proofended by 1
+  \medskip}
+\makeatletter
+\def\proofstart{\@ifnextchar[{\@oprf}{\@nprf}}
+\def\proofenvstart{\@ifnextchar[{\@osprf}{\@nsprf}}
+\def\@oprf[#1]{\begin{rm}\protect\vspace{6pt}\noindent{\bf Proof of #1:\ }%
+\addtolength{\parskip}{5pt}\setlength{\parindent}{0pt}}
+\def\@osprf[#1]{\begin{rm}\protect\vspace{6pt}\noindent
+\addtolength{\parskip}{5pt}\setlength{\parindent}{0pt}}
+\def\@nprf{\begin{rm}\protect\vspace{6pt}\noindent{\bf Proof:\ }%
+\addtolength{\parskip}{5pt}\setlength{\parindent}{0pt}}
+\def\@nsprf{\begin{rm}\protect\vspace{6pt}\noindent%
+\addtolength{\parskip}{5pt}\setlength{\parindent}{0pt}}
+
+
+\newcounter{ctr}
+\newcounter{savectr}
+\newcounter{ectr}
+\newcounter{eectr}
+
+\newenvironment{newenum}{%
+\begin{list}{{\rm (\arabic{ctr})}\hfill}{\usecounter{ctr} \labelwidth=17pt%
+\labelsep=3pt \leftmargin=20pt \topsep=2pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{1pt} }}{\end{list}}
+
+\newenvironment{newenumbf}{%
+\begin{list}{{\bf \arabic{ctr}.}\hfill}{\usecounter{ctr} \labelwidth=17pt%
+\labelsep=3pt \leftmargin=20pt \topsep=1pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{1pt} }}{\end{list}}
+
+\newenvironment{newitemize}{%
+\begin{list}{$\bullet$\hfill}{\labelwidth=16pt%
+\labelsep=5pt \leftmargin=21pt \topsep=3pt%
+\setlength{\listparindent}{\saveparindent}%
+\setlength{\parsep}{\saveparskip}%
+\setlength{\itemsep}{3pt} }}{\end{list}}
+
+\newlength{\savejot}
+\setlength{\jot}{6pt}
+\setlength{\savejot}{\jot}
+
+\newenvironment{newmath}{\begin{displaymath}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{8pt}
+\setlength{\belowdisplayshortskip}{8pt}}{\end{displaymath}}
+
+\newenvironment{neweqnarrays}{\begin{eqnarray*}%
+\setlength{\abovedisplayskip}{-4pt}%
+\setlength{\belowdisplayskip}{-4pt}%
+\setlength{\abovedisplayshortskip}{-4pt}%
+\setlength{\belowdisplayshortskip}{-4pt}%
+\setlength{\jot}{-0.4in} }{\end{eqnarray*}}
+
+\newenvironment{newequation}{\begin{equation}%
+\setlength{\abovedisplayskip}{6pt}%
+\setlength{\belowdisplayskip}{6pt}%
+\setlength{\abovedisplayshortskip}{8pt}%
+\setlength{\belowdisplayshortskip}{8pt} }{\end{equation}}
+
+\newcommand{\heading}[1]{\vspace{5pt}\noindent\textsc{#1}}
+\newcommand{\noskipheading}[1]{\noindent\textsc{#1}}
+
+\newcommand{\tuple}[1]{\langle{#1}\rangle}
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\cross}{\times}
+\newcommand{\xor}{{\oplus}}
+\newcommand{\Colon}{{:\:}}
+\newcommand{\mystrut}{\rule{0em}{12pt}}
+\newcommand{\namestrut}{\rule{0em}{20pt}}
+\newcommand{\emptystring}{\varepsilon}
+
+\newcommand{\calA}{{\cal A}}
+\newcommand{\calB}{{\cal B}}
+\newcommand{\calC}{{\cal C}}
+\newcommand{\calF}{{\cal F}}
+\newcommand{\calM}{{\cal M}}
+\newcommand{\calO}{{\cal O}}
+\newcommand{\calR}{{\cal R}}
+\newcommand{\calH}{{\cal H}}
+\newcommand{\calG}{{\cal G}}
+\newcommand{\calD}{{\cal D}}
+\newcommand{\calE}{{\cal E}}
+\newcommand{\calP}{{\cal P}}
+\newcommand{\calS}{{\cal S}}
+\newcommand{\calU}{{\cal U}}
+\newcommand{\calX}{{\cal X}}
+\newcommand{\calY}{{\cal Y}}
+
+\newcommand{\N}{{{\mathbb N}}	}
+\newcommand{\Z}{{{\mathbb Z}}}
+\newcommand{\R}{{{\mathbb R}}}
+\newcommand{\goesto}{{\rightarrow}}
+\newcommand{\then}{{\;;\;\;}}   % for [ ; ; ; : ] notation
+\newcommand{\andthen}{{\;:\;\;}}
+
+\newcommand{\suchthatt}{\: :\:}
+\newcommand\nextt{\:;\:}
+\newcommand{\sett}[1]{\{#1\}}
+\newcommand{\set}[2]{\{\:#1 \suchthatt #2\:\}}
+\newcommand{\setsize}[1]{\left|{#1}\right|}
+\def\leqq{\;\leq\;}
+\def\eqq{\;=\;}
+\def\geqq{\;\geq\;}
+\def\equivv{\;\equiv\;}
+\def\prn#1{\left(#1\right)}
+\newcommand{\getsr}{{\:{\leftarrow{\hspace*{-3pt}\raisebox{.75pt}{$\scriptscriptstyle\$$}}}\:}}
+
+\newcommand{\Var}[1]{{\mbox{\bf Var}}[#1]}
+\newcommand{\E}{\mathbf{E}}
+\newcommand{\EE}[1]{{\E\left[{#1}\right]}}
+\newcommand{\EEE}[2]{{\E_{#1}\left[{#2}\right]}}
+\newcommand{\Prob}[1]{{\Pr\left[\,{#1}\,\right]}}
+\newcommand{\condProb}[2]{{\Pr}\left[\,#1\,|\,#2\,\right]}
+\newcommand{\concat}{{\,\|\,}}
+
+\newcommand{\verylongleftarrow}[1]
+      {\setlength{\unitlength}{.01in}
+      \begin{picture}(#1,1) \put(#1,0){\vector(-1,0){#1}} \end{picture}}
+\newcommand{\verylongrightarrow}[1]             %longleft and rightgoing arrows
+      {\setlength{\unitlength}{.01in}           %for protocols
+      \begin{picture}(#1,1) \put(0,0){\vector(1,0){#1}} \end{picture}}
+\newcommand{\leftgoing}[2]{{\stackrel{{\displaystyle #2}} {\verylongleftarrow{#1}}}}
+\newcommand{\rightgoing}[2]{{\stackrel{{\displaystyle #2}} {\verylongrightarrow{#1}}}}
+
+\newcommand{\leftgoinga}[1]{\leftgoing{230}{#1} }
+\newcommand{\rightgoinga}[1]{\rightgoing{230}{#1} }
+
+\newcommand{\leftgoingb}[1]{\leftgoing{300}{#1} }
+\newcommand{\rightgoingb}[1]{\rightgoing{300}{#1} }
+
+\newcommand{\seq}{\!=\!}
+\newcommand{\sminus}{\!-\!}
+\newcommand{\splus}{\!+\!}
+
+% ===================================================================
+\newcommand{\kwfont}[1]{{\ensuremath{\mathrm{#1}}}}
+\newcommand{\kwfunction}{{\kwfont{function}\ }}
+\newcommand{\kwlabel}{{\kwfont{label}\ }}
+\newcommand{\kwfor}{{\kwfont{For}\ }}
+\newcommand{\kwand}{{\kwfont{and}\ }}
+\newcommand{\kwor}{{\kwfont{or}\ }}
+\newcommand{\kwnot}{{\kwfont{not}}}
+\newcommand{\kwdo}{{\kwfont{do}\ }}
+\newcommand{\kwreturn}{{\kwfont{\return}\ }}
+\newcommand{\kwalgorithm}{{\ensuremath{\mathbf{Algorithm}\ }}}
+\newcommand{\kwprotocol}{{\kwfont{Protocol}\ }}
+\newcommand{\kwexperiment}{{\kwfont{Experiment}\ }}
+\newcommand{\kwadversary}{{\kwfont{Adversary}\ }}
+\newcommand{\kworacle}{{\kwfont{Oracle}\ }}
+\newcommand{\kwuntil}{{\kwfont{until}\ }}
+\newcommand{\kwrepeat}{{\kwfont{repeat}\ }}
+\newcommand{\kwif}{{\kwfont{If}\ }}
+\newcommand{\kwthen}{{\kwfont{then}\ }}
+\newcommand{\kwelse}{{\kwfont{Else}\ }}
+\newcommand{\kwabort}{{\kwfont{abort}\ }}
+\newcommand{\kwgoto}{{\kwfont{goto}\ }}
+\newcommand{\kwwhile}{{\kwfont{while}\ }}
+\newcommand{\kwparse}{{\kwfont{parse}\ }}
+\newcommand{\kwas}{{\kwfont{as}\ }}
+\newcommand{\kwstatic}{{\kwfont{static}\ }}
+\newcommand{\kwrun}{{\kwfont{run}\ }}
+\newcommand{\kwbegin}{{\kwfont{begin}\ }}
+\newcommand{\kwend}{{\kwfont{end}\ }}
+\newcommand{\kwstart}{{\kwfont{start}\ }}
+\newcommand{\kwcontinue}{{\kwfont{continue}\ }}
+\newcommand{\kwdefine}{{\kwfont{define}\ }}
+\newcommand{\kwflip}{{\kwfont{flip}\ }}
+\newcommand{\kwlet}{{\kwfont{let}\ }}
+\newcommand{\kwof}{{\kwfont{of}\ }}
+\newcommand{\kwcase}{{\kwfont{case}\ }}
+\newcommand{\kwswitch}{{\kwfont{switch}\ }}
+\newcommand{\kwpick}{{\kwfont{pick}\ }}
+\newcommand{\kwset}{{\kwfont{set}\ }}
+\newcommand{\kwcompute}{{\kwfont{compute}\ }}
+\newcommand{\comment}[1]{\hspace{5pt}{\small /$\!\!$/\ #1}}
+\newcommand{\Comment}[1]{\hspace{5pt}{/$\!\!$/\ #1}}
+
+\newcommand{\authnote}[2]{\ifnum\authnotes=1 \begin{center}\fbox{\begin{minipage}{\textwidth}
+\textbf{#1 says:} #2\end{minipage}}\end{center} \fi}
+
+\newcommand{\schemefont}[1]{\mathsf{#1}}
+\newcommand{\schalg}[2]{#1.\mathsf{#2}}
+
+\newcommand{\primfont}[1]{{\mathrm{#1}}}
+\newcommand{\algfont}[1]{#1}
+\newcommand{\advfont}[1]{#1}
+\newcommand{\orfont}[1]{\mathsc{#1}}
+\newcommand{\varfont}[1]{\mathit{#1}}
+\newcommand{\randvarfont}[1]{\mathbf{#1}}
+\newcommand{\constfont}[1]{\mathtt{#1}}
+\newcommand{\notionfont}[1]{\mathcal{#1}}
+\newcommand{\eventfont}[1]{{\mathsc{#1}}}
+\newcommand{\vectorfont}[1]{\mathslbf{#1}}
+\newcommand{\transformfont}[1]{\mathsf{#1}}
+\newcommand{\gamefont}[1]{\mathrm{#1}}
+\newcommand{\procfont}[1]{\mathsc{#1}}
+\newcommand{\setfont}[1]{\mathsl{#1}}
+
+
+\newcommand{\advA}{\calA}
+
+\newcommand{\procIC}{\procfont{E}}
+\newcommand{\procICinv}{\procfont{E}^{-1}}
+\newcommand{\vecf}{\mathbf{f}}
+\newcommand{\hashO}{\procfont{Hash}}
+\newcommand{\hashSimO}{\procfont{HashSim}}
+\newcommand{\progO}{\procfont{Prog}}
+\newcommand{\hashOO}{\procfont{HashO}}
+\newcommand{\hashIO}{\procfont{HashI}}
+\newcommand{\challengeO}{\procfont{Challenge}}
+\newcommand{\refreshO}{\procfont{Refresh}}
+\newcommand{\secIn}{1^\secParam}
+\newcommand{\secParam}{\lambda}
+\newcommand{\vech}{\mathbf{h}}
+\newcommand{\setf}{\setfont{F}}
+\newcommand{\domain}{\setfont{D}}
+\newcommand{\range}{\setfont{R}}
+
+\newcommand{\true}{\mathsf{true}}
+\newcommand{\false}{\mathsf{false}}
+
+\newcommand{\Bad}{\mathsf{Bad}}
+
+\newcommand{\gameName}[1]{\underline{Game #1}\\[2pt]}
+
+\newcommand{\gamesfontsize}{\small}
+\newcommand{\ind}{\hspace*{10pt}}
+
+\newcommand{\mpage}[2]{\begin{minipage}{#1\textwidth}
+    #2 \end{minipage}}
+
+\newcommand{\oneCol}[2]{
+\begin{center}\framebox{\begin{tabular}{c}
+\begin{minipage}[t]{#1\textwidth}\setstretch{1.2}\gamesfontsize
+#2
+\end{minipage} 
+\end{tabular}}\end{center}}
+
+
+
+
+\newcommand{\twoColsNoDivide}[4]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{c@{\hspace*{.4em}}c@{\hspace*{.4em}}c}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #3 \end{minipage}
+        &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #4 \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+
+\newcommand{\twoCols}[4]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{c@{\hspace*{.4em}}|c@{\hspace*{.4em}}c}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #3 \end{minipage}
+        &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #4 \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+\newcommand{\twoColsTwoRows}[6]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{c@{\hspace*{.4em}}|c@{\hspace*{.4em}}c}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #3 \end{minipage}
+        &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #4 \end{minipage}
+        \\ \hline
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #6        
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+\newcommand{\threeCols}[6]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{@{\hspace{-0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #4
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.1}\gamesfontsize #6
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+\newcommand{\threeColstwoSplit}[6]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{@{\hspace{-0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}@{\hspace{0.2em}}c@{\hspace{0.2em}}}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #4
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.1}\gamesfontsize #6
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+\newcommand{\fourColstwoSplit}[8]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{@{\hspace{-0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}@{\hspace{0.2em}}c@{\hspace{0.2em}}@{\hspace{0.2em}}c@{\hspace{0.2em}}}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #6
+        \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.1}\gamesfontsize #7
+        \end{minipage}  &
+        \begin{minipage}[t]{#4\textwidth}\setstretch{1.1}\gamesfontsize #8
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+
+\newcommand{\threeColsSplit}[6]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{@{\hspace{-0.2em}}c@{\hspace{0.2em}}||@{\hspace{0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.1}\gamesfontsize #4
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.1}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.1}\gamesfontsize #6
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+
+\newcommand{\fourCols}[8]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{@{\hspace{-0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}|@{\hspace{0.2em}}c@{\hspace{0.2em}}}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.2}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.2}\gamesfontsize #6
+        \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.2}\gamesfontsize #7
+        \end{minipage}&
+        \begin{minipage}[t]{#4\textwidth}\setstretch{1.2}\gamesfontsize #8
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+
+\newcommand{\threeColsTwoRows}[9]{
+\begin{center}
+        \framebox{
+        \begin{tabular}{c@{\hspace*{.4em}}|c@{\hspace*{.4em}}|c@{\hspace*{.4em}}}
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.2}\gamesfontsize #4
+        \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.2}\gamesfontsize #5
+        \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.2}\gamesfontsize #6
+        \end{minipage}\\\hline 
+        \begin{minipage}[t]{#1\textwidth}\setstretch{1.2}\gamesfontsize
+         #7 \end{minipage} &
+        \begin{minipage}[t]{#2\textwidth}\setstretch{1.2}\gamesfontsize
+         #8 \end{minipage} &
+        \begin{minipage}[t]{#3\textwidth}\setstretch{1.2}\gamesfontsize
+         #9
+        \end{minipage}
+        \end{tabular}
+        }
+\end{center}
+}
+
+\newcommand{\threeColsNoBox}[3]{
+\begin{center}\begin{tabular}{c|c|c}
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#1
+\end{tabbing}\end{minipage} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#2
+\end{tabbing}\end{minipage} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#3
+\end{tabbing}\end{minipage} 
+\end{tabular}\end{center}}
+
+\newcommand{\fourColsNoBox}[4]{
+\begin{center}\begin{tabular}{c|c|c|c}
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#1
+\end{tabbing}\end{minipage} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#2
+\end{tabbing}\end{minipage} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#3
+\end{tabbing}\end{minipage} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#4
+\end{tabbing}\end{minipage} 
+\end{tabular}\end{center}}
+
+
+\newcommand{\twoColsNoBox}[2]{
+\begin{center}\begin{tabular}{c|c}
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#1
+\end{tabbing}\end{minipage} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#2
+\end{tabbing}\end{minipage} 
+\end{tabular}\end{center}}
+
+
+\newcommand{\twoColsNoBoxNoDivide}[2]{
+\begin{center}\begin{tabular}{ccc}
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#1
+\end{tabbing}\end{minipage} & \hspace{10pt} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#2
+\end{tabbing}\end{minipage} 
+\end{tabular}\end{center}}
+
+
+\newcommand{\threeColsNoBoxOneDivide}[3]{
+\begin{center}\begin{tabular}{ccc|c}
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#1
+\end{tabbing}\end{minipage} & \hspace{10pt} &
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#2
+\end{tabbing}\end{minipage} & 
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#2
+\end{tabbing}\end{minipage}
+\end{tabular}\end{center}}
+
+
+\newcommand{\oneColNoBox}[1]{
+\begin{center}\begin{tabular}{c}
+\begin{minipage}[t]{1in}\begin{tabbing}
+12\=12\=12\=\kill
+#1
+\end{tabbing}\end{minipage} 
+\end{tabular}\end{center}}
+
+\newcommand{\aeScheme}{\schemefont{AE}}
+\newcommand{\eScheme}{\mathsf{ES}}
+\newcommand{\EncO}{\procfont{Enc}}
+\newcommand{\VfO}{\procfont{Vf}}
+\newcommand{\NewO}{\procfont{New}}
+\newcommand{\LRO}{\procfont{LR}}
+\newcommand{\LROSim}{\procfont{LRSim}}
+\newcommand{\RoRO}{\procfont{RoR}}
+\newcommand{\EncRealO}{\procfont{Enc}}
+\newcommand{\Fn}{\procfont{Fn}}
+
+\newcommand{\genAdv}[3]{\mathbf{Adv}^{\rm #1}_{#2}(#3)}
+
+\newcommand{\HF}{\mathsf{H}}
+\newcommand{\FF}{\mathsf{F}}
+\newcommand{\DOM}[1]{#1.\mathsf{Dom}}
+\newcommand{\RNG}[1]{#1.\mathsf{Rng}}
+\newcommand{\KEYS}[1]{#1.\mathsf{Keys}}
+\newcommand{\KLength}[1]{#1.\mathsf{kl}}
+\newcommand{\OLength}[1]{#1.\mathsf{ol}}
+\newcommand{\ILength}[1]{#1.\mathsf{il}}
+\newcommand{\GF}{\mathsf{G}}
+\newcommand{\oGF}{\overline{\mathsf{G}}}
+\newcommand{\HKey}{\mathsl{hk}}
+
+
+\newcommand{\indAdv}[2]{\genAdv{ind}{#1}{#2}}
+\newcommand{\prfAdv}[2]{\genAdv{prf}{#1}{#2}}
+\newcommand{\rorAdv}[2]{\genAdv{ind\$}{#1}{#2}}
+\newcommand{\aeAdv}[2]{\genAdv{mu\mbox{-}ind}{#1}{#2}}
+\newcommand{\krAdv}[2]{\genAdv{mu\mbox{-}kr}{#1}{#2}}
+\newcommand{\intAdv}[2]{\genAdv{int}{#1}{#2}}
+
+\newcommand{\gameG}{\gamefont{G}}
+\newcommand{\game}[2]{\mathbf{G}^{\rm #1}_{#2}}
+\newcommand{\gAE}[1]{\game{mu\mbox{-}ind}{#1}}
+\newcommand{\gKR}{\game{mu\mbox{-}kr}}
+\newcommand{\gAEKDM}{\gamefont{AE\mbox{-}KDM}}
+\newcommand{\gKDMCCA}{\gamefont{KDM\mbox{-}CCA}}
+\newcommand{\KDMCCA}{\mathrm{KDM\mbox{-}CCA}}
+\newcommand{\gFKDMReal}{\gamefont{KDM}}
+\newcommand{\gFKDM}{\gamefont{KDM}}
+\newcommand{\gFKDMRand}{\gamefont{KDM^*}}
+\newcommand{\gKDMP}{\gamefont{KDMP}}
+\newcommand{\gKDMF}{\gamefont{KDM}^{-}}
+\newcommand{\gKDMFP}{\gamefont{KDMP}^{-}}
+\newcommand{\pkeScheme}{\schemefont{PKE}}
+\newcommand{\PKEkg}{\schalg{PKE}{Kg}}
+\newcommand{\PKEenc}{\schalg{PKE}{Enc}}
+\newcommand{\PKEdec}{\schalg{PKE}{Dec}}
+\newcommand{\PKEIL}{\schalg{PKE}{IL}}
+\newcommand{\PKEil}{\schalg{PKE}{il}}
+\newcommand{\PKEOL}{\schalg{PKE}{OL}}
+\newcommand{\PKEol}{\schalg{PKE}{ol}}
+\newcommand{\PKErl}{\schalg{PKE}{rl}}
+\newcommand{\RErl}{\schalg{RE}{rl}}
+
+\newcommand{\deScheme}{\schemefont{DE}}
+\newcommand{\DEIL}{\schalg{DE}{IL}}
+\newcommand{\DEil}{\schalg{DE}{il}}
+\newcommand{\DEOL}{\schalg{DE}{OL}}
+\newcommand{\DEol}{\schalg{DE}{ol}}
+\newcommand{\DEkg}{\schalg{DE}{Kg}}
+\newcommand{\DEenc}{\schalg{DE}{Enc}}
+\newcommand{\DEdec}{\schalg{DE}{Dec}}
+
+\newcommand{\seKg}{\schalg{\seScheme}{Kg}}
+\newcommand{\seEnc}{\schalg{\seScheme}{Enc}}
+\newcommand{\seDec}{\schalg{\seScheme}{Dec}}
+\newcommand{\SEcl}{\schalg{\seScheme}{cl}}
+\newcommand{\seSEnc}{\schalg{\seScheme}{SEnc}}
+\newcommand{\seSP}{\schalg{\seScheme}{SP}}
+\newcommand{\seScheme}{\schemefont{AE}}
+\newcommand{\sekl}{\schalg{\seScheme}{kl}}
+\newcommand{\sevl}{\schalg{\seScheme}{vl}}
+\newcommand{\serl}{\schalg{\seScheme}{rl}}
+\newcommand{\seNS}{\schalg{\seScheme}{NS}}
+\newcommand{\msg}{M}
+\newcommand{\ciph}{C}
+\newcommand{\header}{H}
+\newcommand{\nonce}{N}
+\newcommand{\iv}{N}
+\newcommand{\nkey}{\mathsl{K}}
+\newcommand{\seckl}{\seScheme.\mathsf{ckl}}
+\newcommand{\secbl}{\seScheme.\mathsf{bl}}
+
+
+\newcommand{\setX}{X}
