@@ -1,14 +1,7 @@
 %!TEX root = main.tex
 
-\section{Preliminaries}\label{sec-defs}
+\section{Function families}\label{sec-ff}
 
-
-We let $\emptystring$ denote the empty string. If $Z$ is a string then $|Z|$ denotes its length and $Z[1..i]$ denotes bits $1$ through $i$ of $Z$. If $\setX$ is a finite set, we let $x \getsr \setX$ denote picking an element of~$\setX$ uniformly at random and assigning it to $x$.
-Algorithms may be randomized unless otherwise indicated. Running time is worst case.
-If~$A$ is an algorithm, we let $y \gets A(x_1,\ldots;r)$ denote running~$A$ with random coins $r$ on inputs $x_1,\ldots$ and assigning the output to $y$.
-We let $y \getsr A(x_1,\ldots)$ be the result of picking $r$ at random and letting $y \gets A(x_1,\ldots;r)$. We let $[A(x_1,\ldots)]$ denote the set of all possible outputs of $A$ when invoked with inputs $x_1,\ldots$.
-
-We use the code-based game-playing framework of BR~\cite{EC:BelRog06}. (See \figref{fig-ind} for an example.) By $\Pr[\gameG]$ we denote the probability that the execution of game $\gameG$ results in the game returning $\true$. In games, integer variables, set variables and boolean variables are assumed initialized, respectively, to $0$, the empty set, and $\false$.
 
 A family of functions $\FF \Colon \KEYS{\FF} \cross \DOM{\FF}\to \RNG{\FF}$ is a two-argument function that takes a key $K$ in the key space $\KEYS{\FF}$, an input $x$ in the domain $\DOM{\FF}$ and returns an output $\FF(K,x)$ in the range $\RNG{\FF}$. We say $\FF$ has key length $\KLength{\FF}$ if
 $\KEYS{\FF}=\bits^{\KLength{\FF}}$; output length $\OLength{\FF}$ if $\RNG{\FF}=\bits^{\OLength{\FF}}$; and input length $\ILength{\FF}$ if $\DOM{\FF}=\bits^{\ILength{\FF}}$.

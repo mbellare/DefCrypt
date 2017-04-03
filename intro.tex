@@ -1,0 +1,36 @@
+%!TEX root = main.tex
+
+\section{Introduction}\label{sec-intro}
+
+The project aims to create a repository for cryptographic definitions. The intent is to write definitions in a unified, precise way. 
+
+Some of the definitions are novel. We plan to incorporate them into research papers over time. 
+
+Latex files can be downloaded and used. For definitions that are novel, please check with us first. Use your judgement with regard to citation.
+
+\heading{Syntax.} We use what we call the dot syntax. For example a function family $\FF$ specifies its keyspace $\KEYS{\FF}$, domain $\DOM{\FF}$ and range $\RNG{\FF}$ as shown, so that $\FF \Colon \KEYS{\FF} \cross \DOM{\FF}\to \RNG{\FF}$. This means that, once we write $\FF$, we can invoke the associated sets directly via the dot extensions. 
+
+Traditionally, the syntax of a primitive is a tuple, like a PKE scheme is the triple of key generation, encryption and decryption algorithms. Now, the scheme is a single object with the algorithms specified after the dots via standard extensions. 
+
+It makes notation compact. It also allows expansion. If you want to refer to some unconventional element (for example, length of the randomness), add a dot extension. It also moves us closer to a programming language rendition, which is valuable both pedagogically (PlayCrypt) and pragmatically.
+
+\heading{Security.} A security definition will associate to a primitive, notion and adversary (1) a game and (2) an advantage function. Security means the advantage of any poly-time adversary is negligible. This provides a uniform template for definitions. It allows both concrete and asymptotic statements. 
+
+The above referred to non-simulation style definitions, but these also will be handled via games and advantages that depend also on a simulator. What security means is that for every poly-time adversary, there is a simulator making the advantage negligible.
+
+
+\heading{Motivation.} Definitions allow us to formalize and capture security goals. They are the basis for reduction-based (also called provable security) cryptography. They are also valuable in cryptanalysis as targets for attack. 
+
+The proliferation of definitions, written in different style, with different degrees of precision, can make the academic literature hard to navigate. Our intent is a more structured approach.
+
+Our definitions are proof-friendly. They make it easier to write reduction-based proofs by naming all oracles in games.
+
+When working on a problem or writing a paper, one can feel confusion, or that it is not clear how to write something precisely and in detail. The fault often lies with the definitions. We think ours will help.
+
+
+
+ 
+
+
+
+
