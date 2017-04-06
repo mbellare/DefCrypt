@@ -1,0 +1,6 @@
+%!TEX root = ../ff.tex
+
+A family of functions $\FF$ defines $\Ev{\FF} \Colon \Keys{\FF} \cross \Dom{\FF}\to \Rng{\FF}$ which is a two-argument function that takes a key $K$ in the key space $\Keys{\FF}$, an input $x$ in the domain $\Dom{\FF}$ and returns an output $\FF(K,x)$ in the range $\Rng{\FF}$. We say $\FF$ has key length $\kl{\FF}$ if
+$\Keys{\FF}=\bits^{\kl{\FF}}$; output length $\ol{\FF}$ if $\Rng{\FF}=\bits^{\ol{\FF}}$; and input length $\il{\FF}$ if $\Dom{\FF}=\bits^{\il{\FF}}$.
+
+We say that $\FF$ is a \emph{block cipher} if $\il{\FF}=\ol{\FF}$ and $\Ev{\FF}(K,\cdot) \Colon \bits^{\il{\FF}}\to\bits^{\ol{\FF}}$ is a permutation for each $K$ in $\bits^{\kl{\FF}}$. We denote by $\Inv{\FF}(K,\cdot)$ the inverse of $\Ev{\FF}(K,\cdot)$.

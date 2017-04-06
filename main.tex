@@ -4,13 +4,25 @@
 \documentclass[11pt,twoside]{article}
 
 
-\input{header}
+\makeatletter
+\def\input@path{{./}{../../}}
+\makeatother
+
+\usepackage{defcrypt}
+
+
+\usepackage{subfiles}
+\newcommand{\onlyinsubfile}[1]{#1}
+\newcommand{\notinsubfile}[1]{}
 
 \begin{document}
+\renewcommand{\onlyinsubfile}[1]{}
+\renewcommand{\notinsubfile}[1]{#1}
 
 \input{intro}
 \input{notation}
-\input{ff}
+\subfile{primitives/ff/ff}
+\subfile{primitives/se/se}
 
 \addcontentsline{toc}{section}{References}
 
