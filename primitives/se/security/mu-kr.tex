@@ -1,0 +1,34 @@
+%!TEX root = ../se.tex
+
+\heading{Key-Recovery Security.}
+The qualitatively weaker requirement of key-recovery security can sometimes be established with better bounds than ind, which is of practical importance since violating key recovery is much more damaging that violating ind. The formalization is based on game $\gmuKR{\se}(\advA)$ of \figref{fig-se-mu-kr}, associated to encryption scheme $\se$ and adversary $\advA$.  The goal of the adversary $\advA$ is simply to output the key of any honest user. It again has access to oracles $\NewO$, $\EncO$, $\VfO$. Oracles $\EncO$ and $\VfO$ are defined to always return the values as determined by the scheme $\se$. Adversary $\advA$ wins if it outputs any one of the keys that was generated using the $\NewO$ oracle. The advantage of $\advA$ in breaking the mu-kr security of $\se$ is defined as $
+	\mukrAdv{\se}{\advA} \ = \ \Pr[\gmuKR{\se}(\advA)]$.
+
+\begin{figure} [t]
+\twoCols{0.45}{0.45}{
+\gameName{$\gmuKR{\se}(\advA)$} 
+% $U\gets\emptyset$ ; covered by conventions
+$\bar\nkey \getsr \advA^{\NewO,\EncO,\VfO}$\\
+Return $(\bar\nkey \in \{\nkey[1],\dots,\nkey[v]\})$ \medskip
+
+\underline{$\NewO()$} \\[2pt]
+$v\gets v+1$ ; $\nkey[v] \getsr\bits^{\kl{\se}}$ \medskip
+
+\underline{$\EncO(i,\iv,\msg,\header)$}\\[2pt]
+If not ($1\leq i\leq v$) then return $\bot$ \\
+If ($(i,\iv)\in V$) then return $\bot$ \\
+$\ciph\gets \Enc{\se}(\nkey[i],\iv,\msg,\header)$\\
+$V\gets V\cup\{(i,\iv)\}$ \\
+Return $\ciph$
+}
+{
+\underline{$\VfO(i,\iv,\ciph,\header)$}\\[2pt]
+If not ($1\leq i\leq v$) then return $\bot$ \\
+$\msg \gets \Dec{\se}(\nkey[i],\iv,\ciph,\header)$ \\
+Return ($\msg\neq\bot)$ \medskip
+}
+\vspace{-2ex}
+\caption{Game defining multi-user key-recovery security of symmetric encryption scheme $\se$.}
+\label{fig-se-mu-kr}
+\hrulefill
+\end{figure}

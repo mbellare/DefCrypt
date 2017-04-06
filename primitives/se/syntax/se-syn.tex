@@ -1,0 +1,9 @@
+%!TEX root = ../se.tex
+
+A symmetric encryption scheme $\se$ specifies a 
+deterministic encryption algorithm $\Enc{\se}  \allowbreak  \Colon  \allowbreak  \bits^{\kl{\se}}  \allowbreak \cross \allowbreak   \NS{\se}  \allowbreak  \cross  \allowbreak  \bits^*  \allowbreak \cross \bits^* \to \bits^*$ that takes a key $\nkey \in \bits^{\kl{\se}}$, a nonce $\iv \in \NS{\se}$, a message $\msg\in\bits^*$ and a header $\header\in\bits^*$ to return a ciphertext 
+$
+  \ciph \gets \allowbreak \Enc{\se}(\nkey,\allowbreak \iv,\allowbreak \msg,\header) \allowbreak \in \allowbreak \bits^{\cl{\se}(|\msg|)}
+$.
+Here $\kl{\se}\in\N$ is the key length of the scheme, $\NS{\se}$ is the nonce space and $\cl{\se}\Colon\N\to\N$ is the ciphertext length function.  We view the key length $\kl{\se}$ and block length $\bl{se}$ of the cipher as further parameters of $\se$ itself. Also specified is a deterministic decryption algorithm $\Dec{\se} \Colon \bits^{\kl{\se}}\cross \NS{\se} \cross \bits^* \cross \bits^* \to \bits^*\cup\{\bot\}$  that takes $\nkey,\iv,\ciph,\header$ and returns $\msg \gets \Dec{\se}(\nkey,\iv,\ciph,\header) \in \bits^*\cup\{\bot\}$. Correctness requires that $\Dec{\se}(\nkey,\iv,\Enc{\se}(\nkey,\iv,\msg,\header),\header) = \msg$ for all $\msg,\header \in \bits^*$, all $\iv\in\NS{\se}$ and all $\nkey \in\bits^{\kl{\se}}$.
+
