@@ -623,17 +623,38 @@
 \newcommand{\gameG}{\gamefont{G}}
 \newcommand{\game}[2]{\gameG^{\rm #1}_{#2}}
 
+\newcommand{\gOW}[1]{\game{ow}{#1}}
+\newcommand{\gPRF}[1]{\game{prf}{#1}}
+
+\newcommand{\gROR}[1]{\game{ror}{#1}}
 \newcommand{\gmuIND}[1]{\game{mu\mbox{-}ind}{#1}}
 \newcommand{\gmuKR}{\game{mu\mbox{-}kr}}
-\newcommand{\gPRF}[1]{\game{prf}{#1}}
+
 \newcommand{\gIO}[1]{\game{io}{#1}}
 
 %Advantages
 \newcommand{\genAdv}[3]{\mathbf{Adv}^{\rm #1}_{#2}(#3)}
+
+\newcommand{\owAdv}[2]{\genAdv{ow}{#1}{#2}}
 \newcommand{\prfAdv}[2]{\genAdv{prf}{#1}{#2}}
+
 \newcommand{\rorAdv}[2]{\genAdv{ind\$}{#1}{#2}}
 \newcommand{\muindAdv}[2]{\genAdv{mu\mbox{-}ind}{#1}{#2}}
 \newcommand{\mukrAdv}[2]{\genAdv{mu\mbox{-}kr}{#1}{#2}}
+
+\newcommand{\ioAdv}[2]{\genAdv{io}{#1}{#2}}
+
+%Security
+\newcommand{\secfont}[1]{\mathbf{#1}}
+
+\newcommand{\owsec}{\secfont{OW}}
+\newcommand{\prfsec}{\secfont{PRF}}
+
+\newcommand{\rorsec}{\secfont{ROR}}
+\newcommand{\muindsec}{\secfont{MU\mbox{-}IND}}
+\newcommand{\mukrsec}{\secfont{MU\mbox{-}KR}}
+
+\newcommand{\iosec}{\secfont{IO}}
 
 %Oracles
 \newcommand{\procfont}[1]{\mathsc{#1}}
