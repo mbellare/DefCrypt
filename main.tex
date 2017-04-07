@@ -3,33 +3,47 @@
 
 \documentclass[11pt,twoside]{article}
 
+% ==================================================================
+% Subfile Package/Commands
+% ==================================================================
+
+\usepackage{subfiles}
+
+\newcommand{\onlyinsubfile}[1]{#1}
+\newcommand{\notinsubfile}[1]{}
 
 \makeatletter
 \def\input@path{{./}{../../}}
 \makeatother
 
+% ==================================================================
+% Crypto Packages
+% ==================================================================
+
 \usepackage{defcrypt}
+\usepackage{cryptocode}
 
 
-\usepackage{subfiles}
-\newcommand{\onlyinsubfile}[1]{#1}
-\newcommand{\notinsubfile}[1]{}
+
+
+% ==================================================================
+% Document
+% ==================================================================
 
 \begin{document}
-\renewcommand{\onlyinsubfile}[1]{}
-\renewcommand{\notinsubfile}[1]{#1}
+    \renewcommand{\onlyinsubfile}[1]{}
+    \renewcommand{\notinsubfile}[1]{#1}
+  
+  \input{intro}
+  \input{notation}
+  \subfile{primitives/ff/ff}
+  \subfile{primitives/se/se}
 
-\input{intro}
-\input{notation}
-\subfile{primitives/ff/ff}
-\subfile{primitives/se/se}
-
-\addcontentsline{toc}{section}{References}
-
-\begin{small}
-\bibliographystyle{abbrv}
-\bibliography{cryptobib/abbrev3,cryptobib/crypto}
-\end{small}
+  \addcontentsline{toc}{section}{References}
+  \begin{small}
+    \bibliographystyle{abbrv}
+    \bibliography{cryptobib/abbrev3,cryptobib/crypto}
+  \end{small}
 
 \appendix
 
