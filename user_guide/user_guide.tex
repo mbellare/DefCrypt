@@ -1,0 +1,479 @@
+% DefCrypt conventions.tex
+% Started 4/8/2017
+
+\documentclass[11pt,twoside]{report}
+
+\usepackage{listings}
+
+% ==================================================================
+% Crypto Packages
+% ==================================================================
+
+\usepackage{../defcrypt}
+\usepackage{cryptocode}
+
+% ==================================================================
+% Title
+% ==================================================================
+\makeindex
+\title{\Huge DefCrypt \\ \large\textsc{Defining Cryptography}}
+\author{Mihir Bellare\\ and\\ The Students of 209B}
+
+% ==================================================================
+% Document
+% ==================================================================
+
+\begin{document}
+
+\maketitle
+
+
+
+
+% ==================================================================
+% Abstract
+% ==================================================================
+\newpage
+\begin{abstract}
+The project aims to create a repository for cryptographic definitions.
+We seek a comprehensive, unified rendition of cryptographic definitions.
+
+Latex files can be downloaded and used. For definitions that are novel, please check with us first. Use your judgement with regard to citation.
+
+\heading{Motivation.} Definitions allow us to formalize and capture security goals. They are the basis for reduction-based (also called provable security) cryptography. They are also valuable in cryptanal- ysis as targets for attack.
+The proliferation of definitions, written in different style, with different degrees of precision, can make the academic literature hard to navigate. Our intent is a more structured approach.
+Our definitions are proof-friendly. They make it easier to write reduction-based proofs by naming all oracles in games.
+When working on a problem or writing a paper, one can feel confusion, or that it is not clear how to write something precisely and in detail. The fault often lies with the definitions. We think ours will help.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+% ==================================================================
+% CHAPTER: Repository Organization
+% ==================================================================
+\chapter{Repository Organization}\label{sec-one}\label{ap-one}\label{th-one}\label{def-one}\label{cor-one}\label{lem-one}\label{cl-one}\label{prop-one}\label{fig-one}\label{eq-one}
+%
+The current organization of the repository was designed aiming for modularity for ease of git coordination and eventual Wiki uploading.
+
+Each type of cryptographic primitive will have its own folder within the ``/primitives'' folder. For example, functions families are discussed in the ``/primitives/ff'' folder.
+Each of these subfolders will have a main tex file which can be compiled separately from the global repository tex file.
+They will additionally have subfolders for syntax and security notions.
+Each security notion will individually correspond to an individual tex file.
+
+Citation for papers in cryptography can be found in the cryptobib folder (make sure you clone from git with the --recursive flag to include this folder).
+
+
+
+% ==================================================================
+% CHAPTER: Conventions
+% ==================================================================
+\chapter{Conventions}
+In this section we might add some conventions of how to write content.
+
+Try to pattern match the latex conventions of other writing in the repository so we maintain as much uniformity of style as possible.
+
+
+
+% ==================================================================
+% CHAPTER: Examples
+% ==================================================================
+\chapter{Examples}
+In this section we might add some examples of how to use the LaTeX commands.
+
+
+
+
+
+
+% ==================================================================
+% CHAPTER: Useful Commands
+% ==================================================================
+\chapter{Commands}
+
+\section{Useful Commands}
+The organization of this section follows the organization of ``defrypt.sty'', skipping over commands I consider less important which are included in \secref{sec-less-important}.
+The section titles correspond closely to comments used to organize the ``decrypt.sty'' file itself.
+
+% ==================================================================
+% Theorem, Lemma, etc. Environments
+% ==================================================================
+\subsection{Theorem, Lemma, etc. Environments}
+This section defines environments for stating theorems, lemmas, corollary, propositions, definitions, claims, remarks, examples, and notes.
+
+Additionally, it defines commands which should always be used when referencing a label.
+The convention for naming labels is to first use the abbreviation for the type of thing corresponding to the reference command included below, followed by then the relevant type of primitive if any, followed by a clear name (each of these should be separated by a hyphen).
+For example, a figure showing the PRF game in the function family section could be labelled with \lstinline$\label{fig-ff-prfgame}$.
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\secref{sec-one}$ & Natural numbers & \secref{sec-one}  \\
+	\lstinline$\apref{ap-one}$ & Integers & \apref{ap-one}  \\
+	\lstinline$\thref{th-one}$ & Reals & \thref{th-one} \\
+	\lstinline$\defref$ & A tuple & \defref{def-one} \\
+	\lstinline$\corref$ & Parentheses & \corref{cor-one}  \\
+	\lstinline$\lemref$ & Size of a set & \lemref{lem-one}  \\
+	\lstinline$\clref$ & Length of a string & \clref{clr-one} \\
+	\lstinline$\propref$ & The empty string  & \propref{prop-one}  \\
+	\lstinline$\figref$ & Concatenation & \figref{fig-one} \\
+	\lstinline$\eqref$ & Cartesian product & \eqref{eq-one}
+\end{tabular}
+\end{center}
+
+% ==================================================================
+% Math environments
+% ==================================================================
+\subsection{Math Environments}
+This section defines the math environments ``newmath'', ``neweqnarray'', and ``new equation''.
+
+% ==================================================================
+% Section Headings Stuff
+% ==================================================================
+\subsection{Section Heading Stuff}
+The commands \lstinline$\heading$ and \lstinline$\noskipheading$ are used to give a heading to a small chunk of text.
+
+% ==================================================================
+% Figure Stuff
+% ==================================================================
+\subsection{Figure Stuff}
+This sections defines the commands \lstinline$\oneCol$, \lstinline$\twoColsNoDivide$, \lstinline$\twoCols$, \dots which may be useful for creating minipages to contain pseudocode in figures.
+Currently they do not seem to interact nicely with Cryptocode so it is unclear if we will use these commands.
+
+These commands tend to take several inputs the first few of which specify the widths of the different minipages as a fraction of the total page length. For example, .33 gives a minipage approximately a third of the size of a page.
+
+% ==================================================================
+% General Math
+% ==================================================================
+\subsection{General Math}
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\N$ & Natural numbers & $\N$  \\
+	\lstinline$\Z$ & Integers & $\Z$  \\
+	\lstinline$\R$ & Reals & $\R$  \\
+	\lstinline$\tuple{x,y}$ & A tuple & $\tuple{x,y}$  \\
+	\lstinline$\prn{x,y}$ & Parentheses & $\prn{x,y}$  \\
+	\lstinline$\setsize{S}$ & Size of a set & $\setsize{S}$  \\
+	\lstinline$\len{x}$ & Length of a string & $\len{x}$  \\
+	\lstinline$\emptystring$ & The empty string  & $\emptystring$  \\
+	\lstinline$x\concat y$ & Concatenation & $x \concat y$ \\
+	\lstinline$\cross$ & Cartesian product & $\cross$
+\end{tabular}
+\end{center}
+
+% ==================================================================
+% Set Stuff
+% ==================================================================
+\subsection{Set Stuff}
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\sett{a,b,c}$ & A set & $\sett{a,b,c}$  \\
+	\lstinline$\set{a}{b>a}$ & Set & $\set{a}{b>a}$  \\
+	\lstinline$\setX$ & A set called X & $\setX$  \\
+\end{tabular}
+\end{center}
+
+% ==================================================================
+% Probability/Expected Value
+% ==================================================================
+\subsection{Probability/Expected Value}
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\Prob{\bad}$ & Probability & $\Prob{\bad}$  \\
+	\lstinline$\condProb{\bad}{b=1}$ & Conditional probability & $\condProb{\bad}{b=1}$  \\
+	\lstinline$\Var{X}$ & Variance & $\Var{X}$  \\
+	\lstinline$\E$ & Expected value & $\E$  \\
+	\lstinline$\EE{X}$ & Expected value & $\EE{X}$  \\
+	\lstinline$\EEE{b\getsr\bits}{X}$ & Expected value & $\EEE{b\getsr\bits}{X}$  \\
+	\lstinline$\condE{X}{b=1}$ & Conditional expected value & $\condE{X}{b=1}$  \\
+\end{tabular}
+\end{center}
+
+
+
+% ==================================================================
+% Crypto Specific
+% ==================================================================
+\subsection{Crypto Specific}
+
+This section contains some commands which are particularly useful for cryptography.
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\getsr$ & Random sampling & $\getsr$  \\
+	\lstinline$\bits$ & Bits & $\bits$  \\
+	\lstinline$\xor$ & Exclusive or & $\xor$  \\
+	\lstinline$\secIn$ & Security parameter in unary & $\secIn$  \\
+	\lstinline$\secParam$ & Security parameter in binary & $\secParam$  \\
+	\lstinline$\msg$ & A message & $\msg$  \\
+	\lstinline$\ciph$ & A ciphertext & $\ciph$  \\
+	\lstinline$\nonce$ & A nonce & $\nonce$  \\
+	\lstinline$\iv$ & An initialization vector & $\iv$  
+\end{tabular}
+\end{center}
+
+%Adversaries
+\subsubsection{Adversaries}
+Adversaries all use the font \lstinline$\advfont$.
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\advA$ & Adversary A & $\advA$  \\
+	\lstinline$\advB$ & Adversary B & $\advB$ 
+\end{tabular}
+\end{center}
+
+%Schemes
+\subsubsection{Schemes}
+New schemes should be defined to use the font \lstinline$\schemefont$.
+Some schemes currently include:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\HF$ & A family of functions & $\HF$  \\
+	\lstinline$\FF$ & A family of functions & $\FF$  \\
+	\lstinline$\GF$ & A family of functions & $\GF$  \\
+	\lstinline$\oGF$ & A family of functions & $\oGF$  \\
+	\lstinline$\OO$ & An obfuscator & $\OO$  \\
+	\lstinline$\SE$ & A symmetric encryption scheme & $\SE$
+\end{tabular}
+\end{center}
+
+%Dot Extensions
+\subsubsection{Dot Extensions}
+We use what we call the dot syntax. For example a function family $\FF$ specifies its keyspace $\Keys{\FF}$, domain $\Dom{\FF}$ and range $\Rng{\FF}$ as shown, so that $\FF \Colon \Keys{\FF} \cross \Dom{\FF}\to \Rng{\FF}$. This means that, once we write $\FF$, we can invoke the associated sets directly via the dot extensions. 
+
+Traditionally, the syntax of a primitive is a tuple, like a PKE scheme is the triple of key generation, encryption and decryption algorithms. Now, the scheme is a single object with the algorithms specified after the dots via standard extensions. 
+
+It makes notation compact. It also allows expansion. If you want to refer to some unconventional element (for example, length of the randomness), add a dot extension. It also moves us closer to a programming language rendition, which is valuable both pedagogically (PlayCrypt) and pragmatically.
+
+New dot extensions will use the font \lstinline$\schalg$.
+The commands for an extension will take as input the scheme it is extending and use the same capitalization as the ultimate output. 
+Algorithms and sets will them to have a capitalized first letter.
+
+Some extensions currently include:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\Dom{\FF}$ & Domain & $\Dom{\FF}$  \\
+	\lstinline$\Rng{\FF}$ & Range & $\Rng{\FF}$  \\
+	\lstinline$\Keys{\FF}$ & Keyspace & $\Keys{\FF}$  \\
+	\lstinline$\NS{\SE}$ & Nonce space & $\NS{\SE}$  \\
+	\lstinline$\Kg{\FF}$ & Key generation& $\Kg{\FF}$  \\
+	\lstinline$\Ev{\FF}$ & Evaluation & $\Ev{\FF}$ \\
+	\lstinline$\Inv{\FF}$ & Inverse & $\Inv{\FF}$  \\
+	\lstinline$\Enc{\SE}$ & Encryption & $\Enc{\SE}$  \\
+	\lstinline$\Dec{\SE}$ & Decryption & $\Dec{\SE}$  \\
+	\lstinline$\Obf{\OO}$ & Obfuscation & $\Obf{\OO}$ \\
+	\lstinline$\Samp{\sampS}$ & Sampling & $\Samp{\sampS}$\\
+	\lstinline$\Is$ & Input sampling & $\Is{\FF}$
+\end{tabular}
+\end{center}
+
+Length functions will tend to be all lowercase:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\ol{\FF}$ & Output length & $\ol{\FF}$  \\
+	\lstinline$\il{\FF}$ & Input length & $\il{\FF}$  \\
+	\lstinline$\kl{\FF}$ & Key length & $\kl{\FF}$  \\
+	\lstinline$\cl{\SE}$ & Ciphertext length & $\cl{\SE}$  \\
+	\lstinline$\bl{\FF}$ & Block length & $\bl{\FF}$  \\
+	\lstinline$\el{\OO}$ & Expansion length & $\el{\OO}$
+\end{tabular}
+\end{center}
+
+%Pseudocode Commands
+\subsubsection{Pseudocode Commands}
+In addition to pseudo commands specified by the Cryptocode package we have the following commands for writing pseudocode predefined.
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\true$ & True boolean & $\true$  \\
+	\lstinline$\false$ & False boolean & $\false$  \\
+	\lstinline$\bad$ & Flag set to $\true$ when something ``bad'' occurs & $\bad$  \\
+	\lstinline$a\ind b$ & An indent used in code & $a\ind b$
+\end{tabular}
+\end{center}
+
+%Games
+\subsubsection{Games}
+Games are our preferred method of writing security notion.
+They allow a precise formalization that is intended to be proof-friendly and easily understood.
+They will be written as a single G using the font \lstinline$\gamefont$.
+The game will have a superscript giving its name and the command will take as input a subscript.
+The convention for game commands with be a single `g' followed by the name of the security game.
+Each new security notation should specify a game.
+
+Currently included games include:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\gOW{\FF,\advA}$ & One way function game & $\gOW{\FF,\advA}$  \\
+	\lstinline$\gPRF{\FF,\advA}$ & Pseudorandom function game & $\gPRF{\FF,\advA}$  \\
+	\lstinline$\gROR{\SE,\advA}$ & Real or random game & $\gROR{\SE,\advA}$  \\
+	\lstinline$\gmuIND{\SE}$ & Multi-user indistinguishability game & $\gmuIND{\SE}$  \\
+	\lstinline$\gmuKR{\SE}$ & Multi-user key recovery game & $\gmuKR{\SE}$  \\
+	\lstinline$\gIO{\OO,\advA}$ & Indistinguishability obfuscation game & $\gIO{\OO,\advA}$
+\end{tabular}
+\end{center}
+
+
+%Advantages
+\subsubsection{Advantages}
+We use the convention of writing security definitions in terms of an advantage function which measures how well an adversary breaks the security of a primitive.
+They allow a convenient modular statements of theorems and encourage definitions that are amenable to being considered in both the asymptotic and concrete security regimes.
+Each advantage function will include its name as a superscript.
+The command for it will take two inputs, a subscript and an input to the function.
+In the asymptotic section, the input to the advantage functions should be the security parameter in binary, in the concrete setting it will be the adversary. 
+The convention for advantage commands is the name of the security notion in lowercase followed by ``Adv''.
+Every game should have a advantage function associated with it.
+
+Currently included advantage functions include:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\owAdv{\FF,\advA}{\secParam}$ & One way function advantage & $\owAdv{\FF,\advA}{\secParam}$  \\
+	\lstinline$\prfAdv{\FF,\advA}{\secParam}$ & Pseudorandom function advantage & $\prfAdv{\FF,\advA}{\secParam}$  \\
+	\lstinline$\rorAdv{\SE}{\advA}$ & Real or random advantage & $\rorAdv{\SE}{\advA}$  \\
+	\lstinline$\muindAdv{\SE}{\advA}$ & Multi-user indistinguishability advantage & $\muindAdv{\SE}{\advA}$  \\
+	\lstinline$\mukrAdv{\SE}{\advA}$ & Multi-user key recovery advantage & $\mukrAdv{\SE}{\advA}$  \\
+	\lstinline$\ioAdv{\OO,\advA,\sampS}{\secParam}$ & Indistinguishability obfuscation advantage & $\ioAdv{\OO,\advA,\sampS}{\secParam}$
+\end{tabular}
+\end{center}
+
+%Security Sets
+\subsubsection{Security Sets}
+In the asymptotic setting, we will define sets of all of the security schemes for a particular security notation.
+These sets often allow precise and succinct theorem statements relating different security notions.
+The naming convention for commands is to have ``set'' followed by the name of the security notion in uppercase.
+Every asymptotic security notion should have a set associated with it.
+
+Currently included sets include:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\setOW$ & One way function set & $\setOW$  \\
+	\lstinline$\setPRF$ & Pseudorandom function set & $\setPRF$  \\
+	\lstinline$\setROR$ & Real or random set & $\setROR$  \\
+	\lstinline$\setmuIND$ & Multi-user indistinguishability set & $\setmuIND$  \\
+	\lstinline$\setmuKR$ & Multi-user key recovery set & $\setmuKR$  \\
+	\lstinline$\setIO$ & Indistinguishability obfuscation set & $\setIO$
+\end{tabular}
+\end{center}
+
+%Oracles
+\subsubsection{Oracles}
+Games often give an adversary access to an oracle.
+We have various predefined oracles names.
+New oracles will use the font \lstinline$\procfont$.
+We will use the convention that the commands for oracles end in a capital `O'.
+
+Currently included oracles include:
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\EncO$ & Encryption oracle & $\EncO$  \\
+	\lstinline$\VfO$ & Verification oracle & $\VfO$  \\
+	\lstinline$\NewO$ & New oracle & $\NewO$  \\
+	\lstinline$\LRO$ & Left-or-right oracle & $\LRO$  \\
+	\lstinline$\RoRO$ & Real-or-random oracle & $\RoRO$  \\
+	\lstinline$\FnO$ & Function oracle & $\FnO$
+\end{tabular}
+\end{center}
+
+%Keys
+\subsubsection{Keys}
+Schemes often need to use keys.
+We have various predefined macros for them.
+
+\begin{center}
+\begin{tabular}{l l l}
+	\textbf{Command} & \textbf{Description} & \textbf{Result} \\\hline
+	\lstinline$\key$ & Generic key & $\key$  \\
+	\lstinline$\fkey$ & F key & $\fkey$  \\
+	\lstinline$\nkey$ & N key & $\nkey$  \\
+	\lstinline$\pkey$ & Public key & $\pkey$  \\
+	\lstinline$\skey$ & Secret key & $\skey$
+\end{tabular}
+\end{center}
+
+
+
+
+
+
+% ==================================================================
+% SECTION: Less Important
+% ==================================================================
+\section{Less Important}\label{sec-less-important}
+This section includes various commands that I (Joseph) consider less important to know.
+
+% ==================================================================
+% Something with fonts ???
+% ==================================================================
+\subsection{Something with fonts ???}
+I dunno, something with fonts.
+
+% ==================================================================
+% ????
+% ==================================================================
+\subsection{???}
+?
+
+% ==================================================================
+% List environments ??? 
+% ==================================================================
+\subsection{List environments}
+This section defines some list environments.
+
+% ==================================================================
+% Spacing something ???
+% ==================================================================
+\subsection{Spacing Something ???}
+This section defines some lengths.
+
+% ==================================================================
+% Math Relations/Operations with spacing/size stuff ???
+% ==================================================================
+\subsection{Math Relations/Operations with spacing/size stuff ???}
+The commands \lstinline$\leqq$, \lstinline$\eqq$, \lstinline$\geqq$, \lstinline$\equivv$, \lstinline$\seq$, \lstinline$\sminus$, \lstinline$\splus$, and \lstinline$\Colon$ have uses. I guess.
+
+
+% ==================================================================
+% Fonts ???
+% ==================================================================
+\subsection{Fonts ???}
+This section defines several fonts.
+I do not believe any of them are currently in use, they may be removed.
+
+
+% ==================================================================
+% Colors!!!!
+% ==================================================================
+\subsection{Colors}
+This section defines the commands \lstinline$\red$, \lstinline$\green$, \lstinline$\blue$, and \lstinline$\cyan$.
+These commands can be useful for making text easy to find while debugging, but should be avoided in finalized writing.
+
+% ==================================================================
+% Author Notes
+% ==================================================================
+\subsection{Author Notes}
+The command \lstinline$\authnote{}$ currently does not work.
+
+% ==================================================================
+% Symbols for math-y phrases ???
+% ==================================================================
+\subsection{Symbols for math-y phrases ???}
+I do not have an explanation for \lstinline$\then$, \lstinline$\andthen$, \lstinline$\suchthatt$, or \lstinline$\suchthat$.
+Perhaps they are reasonable to remove?
+
+
+\section{Acknowledgement}
+Some formatting of this LaTeX file was borrowed from Cryptocode by Arno Mittelbach.
+
+\end{document}

@@ -2,22 +2,31 @@
 
 \heading{One-Way Function}
 
-First the definition presented in class.
+One-way functions were originally defined by~\cite{}.
+Our formalization is based on the game $\gOW{\FF,\advA}$, as shown in \figref{fig-ff-ow}.
+It is associated with a family of functions $\FF$ and an adversary $\advA$.
+The game samples a random key $\key$ and input $x$ for $\FF$.
+It then applies $\FF$ to $x$ with $\key$ to obtain the output $y$.
+The goal of the adversary, given $\key$ and $y$, is to produce $x'$ such that $\FF$ applied to $x'$ with $\key$ outputs $y$.
+
+First the definition presented in class:
 \begin{defn}
 	Let $\FF$ be a family of functions. $\FF$ is one-way if $\forall$ PT $\advA$, the function $\owAdv{\FF,\advA}{\cdot}$ is negligible where $\owAdv{\FF,\advA}{\secParam}=\Pr[\gOW{\FF,\advA}(\secParam)]$.
 \end{defn}
 
+\red{
 One potential problem with the above is that it does not guarantee $\Dom{\FF}(\secParam,\key)$ can be sampled from efficiently.
 So the existence of a OWF will then \emph{not} imply all the things we want it to (i.e. that a PRG exists).
 Note that allowing a negligible probability of error/negligible statistical distance does not fix this.
+}
 
-Now a definition based on syntax 3.
+Now a definition based on syntax 3:
 
 \begin{defn}
 	Let $\FF$ be an input-sampleable family of functions. Then the one-way advantage of any adversary $\advA$ against $\FF$ is defined as $\owAdv{\FF,\advA}{\secParam}=\Pr[\gOW{\FF,\advA}(\secParam)]$. $\FF$ is a one-way function iff for all PT adversaries $\advA$, the function $\owAdv{\FF,\advA}{\cdot}$ is negligible.
 \end{defn}
 
-We let $\owsec$ denote the set of all one-way functions.
+We let $\setOW$ denote the set of all one-way functions.
 
 \begin{figure} [t]
 %\twoCols{0.23}{0.23}

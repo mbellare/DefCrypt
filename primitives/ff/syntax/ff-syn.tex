@@ -1,11 +1,13 @@
 %!TEX root = ../ff.tex
 
+We sketch three options of how the syntax for function families might be specified.
+
 A family of functions $\FF$ defines $\Ev{\FF} \Colon \Keys{\FF} \cross \Dom{\FF}\to \Rng{\FF}$ which is a two-argument function that takes a key $K$ in the key space $\Keys{\FF}$, an input $x$ in the domain $\Dom{\FF}$ and returns an output $\FF(K,x)$ in the range $\Rng{\FF}$. We say $\FF$ has key length $\kl{\FF}$ if
 $\Keys{\FF}=\bits^{\kl{\FF}}$; output length $\ol{\FF}$ if $\Rng{\FF}=\bits^{\ol{\FF}}$; and input length $\il{\FF}$ if $\Dom{\FF}=\bits^{\il{\FF}}$.
 
 We say that $\FF$ is a \emph{block cipher} if $\il{\FF}=\ol{\FF}$ and $\Ev{\FF}(K,\cdot) \Colon \bits^{\il{\FF}}\to\bits^{\ol{\FF}}$ is a permutation for each $K$ in $\bits^{\kl{\FF}}$. We denote by $\Inv{\FF}(K,\cdot)$ the inverse of $\Ev{\FF}(K,\cdot)$.
 
-\subsection{Syntax 2}
+\subsection{Proposed Syntax 2}
 
 The definition below is intended as a faithful rendition of the definition presented in class.
 
@@ -17,12 +19,10 @@ The definition below is intended as a faithful rendition of the definition prese
 	\end{itemize}
 \end{defn}
 
-\subsection{Syntax 3}
+\subsection{Proposed Syntax 3}
 
-I now give a slightly different proposed definition.
-
-In the below I adopt that algorithms will always be considered to be PT unless specified otherwise.
-Perhaps also the convention that any operation/algorithm applied to $\bot$ returns $\bot$ (in particular that the boolean $\bot=x$ equals $\bot$ for all $x$.)
+I now give a slightly different proposed definition.\footnote{In the below I adopt that algorithms will always be considered to be PT unless specified otherwise.
+Perhaps also the convention that any operation/algorithm applied to $\bot$ returns $\bot$ (in particular that the boolean $\bot=x$ equals $\bot$ for all $x$.)}
 
 \begin{defn}
 	A family of functions $\FF$ specifies:

@@ -1,5 +1,3 @@
-
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{defcrypt}[2017/04/03 v0.1 LaTeX package for DefCrypt]
 
@@ -575,6 +573,9 @@
 \newcommand{\advfont}[1]{#1}
 
 \newcommand{\advA}{\advfont{A}}
+\newcommand{\advB}{\advfont{B}}
+
+\newcommand{\sampS}{\advfont{S}}
 
 %Schemes
 \newcommand{\schemefont}[1]{\mathsf{#1}}
@@ -586,7 +587,7 @@
 
 \newcommand{\OO}{\schemefont{O}}
 
-\newcommand{\se}{\schemefont{SE}}
+\newcommand{\SE}{\schemefont{SE}}
 
 %Dot Extensions
 \newcommand{\schalg}[2]{#1.\mathsf{#2}}
@@ -602,6 +603,7 @@
 \newcommand{\Enc}[1]{\schalg{#1}{Enc}}
 \newcommand{\Dec}[1]{\schalg{#1}{Dec}}
 \newcommand{\Obf}[1]{\schalg{#1}{Obf}}
+\newcommand{\Samp}[1]{\schalg{#1}{Samp}}
 \newcommand{\Is}[1]{\schalg{#1}{Is}}
 
 \newcommand{\ol}[1]{\schalg{#1}{ol}}
@@ -609,6 +611,7 @@
 \newcommand{\kl}[1]{\schalg{#1}{kl}}
 \newcommand{\cl}[1]{\schalg{#1}{cl}}
 \newcommand{\bl}[1]{\schalg{#1}{bl}}
+\newcommand{\el}[1]{\schalg{#1}{el}}
 
 %Pseudocode Commands
 \newcommand{\gameName}[1]{\underline{Game #1}\\[2pt]}
@@ -644,17 +647,17 @@
 
 \newcommand{\ioAdv}[2]{\genAdv{io}{#1}{#2}}
 
-%Security
+%Security Sets
 \newcommand{\secfont}[1]{\mathbf{#1}}
 
-\newcommand{\owsec}{\secfont{OW}}
-\newcommand{\prfsec}{\secfont{PRF}}
+\newcommand{\setOW}{\secfont{OW}}
+\newcommand{\setPRF}{\secfont{PRF}}
 
-\newcommand{\rorsec}{\secfont{ROR}}
-\newcommand{\muindsec}{\secfont{MU\mbox{-}IND}}
-\newcommand{\mukrsec}{\secfont{MU\mbox{-}KR}}
+\newcommand{\setROR}{\secfont{ROR}}
+\newcommand{\setmuIND}{\secfont{MU\mbox{-}IND}}
+\newcommand{\setmuKR}{\secfont{MU\mbox{-}KR}}
 
-\newcommand{\iosec}{\secfont{IO}}
+\newcommand{\setIO}{\secfont{IO}}
 
 %Oracles
 \newcommand{\procfont}[1]{\mathsc{#1}}
@@ -669,6 +672,9 @@
 \newcommand{\key}{K}
 \newcommand{\fkey}{K}
 \newcommand{\nkey}{K}
+
+\newcommand{\pkey}{pk}
+\newcommand{\skey}{sk}
 
 
 \endinput
