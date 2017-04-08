@@ -1,0 +1,30 @@
+\documentclass[../../main.tex]{subfiles}
+
+% ==================================================================
+% Document
+% ==================================================================
+
+\begin{document}
+
+\onlyinsubfile
+{
+    \input{/notation}
+}
+
+\section{Function families}\label{sec-ff}
+    \subsection{Syntax}
+        \input{primitives/ff/syntax/ff-syn}
+    \subsection{Security}
+        \input{primitives/ff/security/ow}
+        \input{primitives/ff/security/prf}
+
+\onlyinsubfile
+{
+    \addcontentsline{toc}{section}{References}
+    \begin{small}
+        \bibliographystyle{abbrv}
+        \bibliography{../../cryptobib/abbrev3,../../cryptobib/crypto}
+    \end{small}
+}
+
+\end{document}

@@ -1,0 +1,56 @@
+%!TEX root = ../ff.tex
+
+\heading{Pseudorandom Function}
+We present GGM's definition of pseudorandom function security~\cite{GolGolMic86}. The formalization is based on game $\gPRF{\FF}(\advA)$ of \figref{fig-ff-prf}, associated to family of functions $\FF$ and adversary $\advA$. The game initially samples a random challenge bit $b$, with $b=1$ indicating it is in ``real'' mode and $b=0$ that it is in ``random" mode. As per our conventions noted in \secref{sec-defs},  the sets $V,W$ are assumed initialized to the empty set, and the integer $v$ is assumed initialized to $0$. Now the adversary $\advA$ also has access to an evaluation oracle $\RoRO$ that takes an input $x$. The oracle either returns a uniformly random element from $\Rng{\FF}$ (for $b=0$), or an evaluation under $\Ev{\FF}$ using the key (for $b=1$). The oracle checks that $\advA$ does not an input $x$. As a last step, the adversary outputs a bit $b'$ that can be viewed as a guess for $b$.  The advantage of adversary $\advA$ in breaking the mu-ind security of   $\se$ is defined as $\prfAdv{\FF}{\advA} = 2\Pr[\gPRF{\FF}(\advA)]- 1$.
+
+
+Hmmm...PRFs also have weirdness if uniform sampling from $\Rng{\FF}$ cannot be done efficiently/if $\setsize{\Rng{\FF}}=1$ .
+
+\begin{figure} [t]
+\oneCol{0.23}
+{
+\gameName{$\gPRF{\FF}(\advA)$} 
+$b \getsr \bits$ ;
+$\key \getsr \Kg{\FF}$\\
+$b' \getsr \advA^{\RoRO}$\\
+Return $(b' = b)$ \medskip
+
+\underline{$\FnO(x)$}\\[2pt]
+If ($x \in \setX$) then return $\bot$ \\
+$y_1\gets \Ev{\FF}(\fkey,x)$\\
+$y_0\getsr \Rng{\FF}$ \\
+$\setX \gets \setX\cup\{x\}$ \\
+Return $y_b$
+}
+\begin{center}
+\fbox
+{
+\begin{pchstack}
+\procedure{Game $\gPRF{\FF,\advA}(\secParam)$}
+  {
+    b \getsr \bits;
+    \key \getsr \Kg{\FF}(\secIn)  \\
+    b' \getsr \advA^{\RoRO}(\secIn)  \\
+    \pcreturn (b' = b)
+  }
+  
+    \pchspace
+    
+\procedure{Oracle $\FnO(x)$}
+  {
+    \pcif (T[x] =\bot) \pcthen  \\
+    \t T[x] \getsr \Rng{\FF}(\secIn)  \\
+    \pcfi \\
+    y_1\gets \Ev{\FF}(\fkey,x)  \\
+    y_0\getsr T[x] \\
+   \pcreturn y_b
+  }
+\end{pchstack}
+}
+\end{center}
+\vspace{-2ex}
+\caption{\textbf{Top}: Game defining prf security of function family $\FF$. \textbf{Bottom}: Attempt to write same game with crpyotcode}
+\label{fig-ff-prf}
+\hrulefill
+\end{figure}
+

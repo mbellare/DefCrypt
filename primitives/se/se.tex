@@ -1,0 +1,29 @@
+\documentclass[../../main.tex]{subfiles}
+
+
+\begin{document}
+
+\onlyinsubfile
+{
+    \input{/notation}
+}
+
+\section{Symmetric Encryption}\label{sec-se}
+    \subsection{Syntax}
+        \input{primitives/se/syntax/se-syn.tex}
+    \subsection{Multi-User Security of Symmetric Encryption}\label{sec-se-mu-defs}
+        \input{primitives/se/security/mu-ind.tex}
+        \input{primitives/se/security/mu-kr.tex}
+
+
+
+\onlyinsubfile
+{
+    \addcontentsline{toc}{section}{References}
+    \begin{small}
+        \bibliographystyle{abbrv}
+        \bibliography{../../cryptobib/abbrev3,../../cryptobib/crypto}
+    \end{small}
+}
+
+\end{document}

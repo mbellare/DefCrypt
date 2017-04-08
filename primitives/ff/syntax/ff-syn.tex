@@ -1,0 +1,54 @@
+%!TEX root = ../ff.tex
+
+A family of functions $\FF$ defines $\Ev{\FF} \Colon \Keys{\FF} \cross \Dom{\FF}\to \Rng{\FF}$ which is a two-argument function that takes a key $K$ in the key space $\Keys{\FF}$, an input $x$ in the domain $\Dom{\FF}$ and returns an output $\FF(K,x)$ in the range $\Rng{\FF}$. We say $\FF$ has key length $\kl{\FF}$ if
+$\Keys{\FF}=\bits^{\kl{\FF}}$; output length $\ol{\FF}$ if $\Rng{\FF}=\bits^{\ol{\FF}}$; and input length $\il{\FF}$ if $\Dom{\FF}=\bits^{\il{\FF}}$.
+
+We say that $\FF$ is a \emph{block cipher} if $\il{\FF}=\ol{\FF}$ and $\Ev{\FF}(K,\cdot) \Colon \bits^{\il{\FF}}\to\bits^{\ol{\FF}}$ is a permutation for each $K$ in $\bits^{\kl{\FF}}$. We denote by $\Inv{\FF}(K,\cdot)$ the inverse of $\Ev{\FF}(K,\cdot)$.
+
+\subsection{Syntax 2}
+
+The definition below is intended as a faithful rendition of the definition presented in class.
+
+\begin{defn}
+	A family of functions $\FF$ specifies:
+	\begin{itemize}
+		\item $\forall \secParam\in\N$: a set $\Keys{\FF}(\secparam)$ of keys
+		\item $\forall \key\in\Keys{\FF}(\secparam)$: a function $\Ev{\FF}(\secIn,\key,\cdot):\Dom{\FF}(\secparam,\key)\to\Rng{\FF}(\secparam,\key)$
+	\end{itemize}
+\end{defn}
+
+\subsection{Syntax 3}
+
+I now give a slightly different proposed definition.
+
+In the below I adopt that algorithms will always be considered to be PT unless specified otherwise.
+Perhaps also the convention that any operation/algorithm applied to $\bot$ returns $\bot$ (in particular that the boolean $\bot=x$ equals $\bot$ for all $x$.)
+
+\begin{defn}
+	A family of functions $\FF$ specifies:
+	\begin{itemize}
+		\item randomized key generation algorithm $\Kg{\FF}$, which takes as input the security parameter $\secIn$ and outputs a key $\key$
+		\item deterministic evaluation algorithm $\Ev{\FF}$,  which maps the security parameter $\secIn$,  key $\key$, and input $x$ to output string $y$ 
+	\end{itemize}
+\end{defn}
+
+We now introduce some useful notation.
+\begin{defn}
+	Let $\FF$ be a family of functions.
+	\begin{itemize}
+		\item The keyspace of $\FF$, $\Keys{\FF}$, is defined by $\Keys{\FF}(\secParam)=[\Kg{\FF}(\secIn)]$.
+		\item The domain of $\FF$, $\Dom{\FF}$, is defined by $\Dom{\FF}(\secParam,\key)=\set{x}{\Ev{\FF}(\secParam,\key,x)\neq\bot}$.
+		\item A range of $\FF$ is a function $\Rng{\FF}$ satisfying $\Ev{\FF}(\secIn,\key,x)\in\Rng{\FF}(\secParam,\key)$ for all $\secParam\in$ and $x\in\Dom{\FF}(\secParam,\key)$.
+	\end{itemize}
+\end{defn}
+
+\begin{defn}
+	An input-sampleable family of functions $\FF$ is a family of functions which additionally specifies a randomized algorithm $\Is{\FF}$.
+	This algorithm outputs an $x\in\Dom{\FF}(\secParam,\key)$ when given security parameter $\secIn$ and key $\key\in\Keys{\FF}(\secParam)$ as inputs.  
+\end{defn}
+
+We say $\FF$ has key length $\kl{\FF}$ if $\Keys{\FF}(\secParam)=\bits^{\kl{\FF}(\secParam)}$;
+input length $\il{\FF}(\secParam)$ if $\Dom{\FF}(\secParam,\key)=\bits^{\il{\FF}(\secParam)}$ for all $\key\in\Keys{\FF}(\secParam)$;
+and
+output length $\ol{\FF}(\secParam)$ if $\Rng{\FF}(\secParam,\key)=\bits^{\ol{\FF}(\secParam)}$.
+In this case we assume $\Kg{\FF}$ is the algorithm which samples $\key\in\bits^{\kl{\FF}(\secParam)}$ uniformly at random and $\Is{\FF}$ is the algorithm which samples $x\in\bits^{\il{\FF}(\secParam)}$ uniformly at random. 

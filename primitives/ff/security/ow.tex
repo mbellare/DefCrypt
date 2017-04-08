@@ -1,0 +1,53 @@
+%!TEX root = ../ff.tex
+
+\heading{One-Way Function}
+
+First the definition presented in class.
+\begin{defn}
+	Let $\FF$ be a family of functions. $\FF$ is one-way if $\forall$ PT $\advA$, the function $\owAdv{\FF,\advA}{\cdot}$ is negligible where $\owAdv{\FF,\advA}{\secParam}=\Pr[\gOW{\FF,\advA}(\secParam)]$.
+\end{defn}
+
+One potential problem with the above is that it does not guarantee $\Dom{\FF}(\secParam,\key)$ can be sampled from efficiently.
+So the existence of a OWF will then \emph{not} imply all the things we want it to (i.e. that a PRG exists).
+Note that allowing a negligible probability of error/negligible statistical distance does not fix this.
+
+Now a definition based on syntax 3.
+
+\begin{defn}
+	Let $\FF$ be an input-sampleable family of functions. Then the one-way advantage of any adversary $\advA$ against $\FF$ is defined as $\owAdv{\FF,\advA}{\secParam}=\Pr[\gOW{\FF,\advA}(\secParam)]$. $\FF$ is a one-way function iff for all PT adversaries $\advA$, the function $\owAdv{\FF,\advA}{\cdot}$ is negligible.
+\end{defn}
+
+We let $\owsec$ denote the set of all one-way functions.
+
+\begin{figure} [t]
+%\twoCols{0.23}{0.23}
+% The pseudocode doesn't like twoCols *sad face*
+% I don't like the line spacing either.
+\fbox
+{
+\procedure{Game $\gOW{\FF,\advA}(\secParam)$}
+  {
+    \key\getsr\Keys{\FF}(\secParam);\ 
+    x\getsr\Dom{\FF}(\secParam,\key)\\
+    y\gets \Ev{\FF}(\secIn,\key,x);\ 
+    x'\getsr\advA(\secIn,\key,y)\\
+    \pcreturn (\Ev{\FF}(\secIn,\key,x')=y)
+  }
+}
+\fbox
+{
+\procedure{Game $\gOW{\FF,\advA}(\secParam)$}
+  {
+    \key\getsr\Kg{\FF}(\secIn);\ 
+    x\getsr\Is{\FF}(\secIn,\key)\\
+    y\gets \Ev{\FF}(\secIn,\key,x);\ 
+    x'\getsr\advA(\secIn,\key,y)\\
+    \pcreturn (\Ev{\FF}(\secIn,\key,x')=y)
+  }
+}
+\vspace{-2ex}
+\caption{Games defining ow security of function family $\FF$.}
+\label{fig-ff-ow}
+\hrulefill
+\end{figure}
+
