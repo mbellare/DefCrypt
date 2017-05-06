@@ -1,0 +1,18 @@
+%!TEX root = ../fpe.tex
+
+A format-preserving encryption (FPE) scheme specifies two deterministic algorithms
+\begin{itemize}
+	\item A set of keys $\Keys{\FPE}$.
+	\item A nonce-space $\NS{\FPE}$.
+	\item A domain $\Dom{\FPE}$.
+	\item A deterministic encryption algorithm $\Enc{\FPE}:\Keys{\FPE}\cross\NS{\FPE}\cross\Dom{\FPE}\to\Dom{\FPE}$.
+	\item A deterministic decryption algorithm $\Dec{\FPE}:\Keys{\FPE}\cross\NS{\FPE}\cross\Dom{\FPE}\to\Dom{\FPE}$.
+\end{itemize}
+Correctness requires that for all $(\key,\nonce,\msg)\in\Keys{\FPE}\cross\NS{\FPE}\cross\Dom{\FPE}$,
+\begin{newmath}
+	\Dec{\FPE}(\key,\nonce,\Enc{\FPE}(\key,\nonce,\msg))=\msg.
+\end{newmath}
+
+The term ``format-preserving'' refers to the fact that ciphertexts must be in the same domain (i.e. have the same format) as the messages. We are typically interested in the case when $\Dom{\FPE}$ is a finite set.
+
+Note that FPE schemes are syntactically equivalent to a tweakable blockcipher. 

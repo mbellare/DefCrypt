@@ -1,0 +1,34 @@
+\documentclass[../../main.tex]{subfiles}
+
+% ==================================================================
+% Document
+% ==================================================================
+
+\newcommand{\FPE}{\schemefont{FPE}}
+
+\newcommand{\gPRP}[1]{\game{prp}{#1}}
+\newcommand{\prpAdv}[2]{\genAdv{prp}{#1}{#2}}
+
+\begin{document}
+
+\onlyinsubfile
+{
+    \input{/notation}
+}
+
+\section{Format Preserving Encryption}\label{sec-fpe}
+    \subsection{Syntax}
+        \input{primitives/fpe/syntax/fpe-syn}
+    \subsection{Security}
+        \input{primitives/fpe/security/prp}
+
+\onlyinsubfile
+{
+    \addcontentsline{toc}{section}{References}
+    \begin{small}
+        \bibliographystyle{abbrv}
+        \bibliography{../../cryptobib/abbrev3,../../cryptobib/crypto}
+    \end{small}
+}
+
+\end{document}
