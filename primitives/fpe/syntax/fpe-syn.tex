@@ -15,4 +15,4 @@ Correctness requires that for all $(\key,\nonce,\msg)\in\Keys{\FPE}\cross\NS{\FP
 
 The term ``format-preserving'' refers to the fact that ciphertexts must be in the same domain (i.e. have the same format) as the messages. We are typically interested in the case when $\Dom{\FPE}$ is a finite set.
 
-Note that FPE schemes are syntactically equivalent to a tweakable blockcipher. 
+Note that FPE schemes are syntactically equivalent to a tweakable blockcipher. Tweaks are not strictly necessary for an implementation of FPE (i.e. $\NS{\FPE}$ can be the empty set), but they do provide greater security.
