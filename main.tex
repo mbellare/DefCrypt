@@ -23,19 +23,24 @@
 \usepackage{defcrypt}
 \usepackage{cryptocode}
 
-
 % ==================================================================
 % Document
 % ==================================================================
 
 \begin{document}
-    \renewcommand{\onlyinsubfile}[1]{}
-    \renewcommand{\notinsubfile}[1]{#1}
+  \renewcommand{\onlyinsubfile}[1]{}
+  \renewcommand{\notinsubfile}[1]{#1}
+
+  \title{DefCrypt: Definitions for Cryptography}
+  \author{UCSD CSE 209B}
+  \maketitle
+  \tableofcontents	
   
   \input{intro}
   \input{notation}
   \subfile{primitives/ff/ff}
   \subfile{primitives/se/se}
+  \subfile{primitives/ds/ds}
 
   \addcontentsline{toc}{section}{References}
   \begin{small}

@@ -7,7 +7,7 @@ $\Keys{\FF}=\bits^{\kl{\FF}}$; output length $\ol{\FF}$ if $\Rng{\FF}=\bits^{\ol
 
 We say that $\FF$ is a \emph{block cipher} if $\il{\FF}=\ol{\FF}$ and $\Ev{\FF}(K,\cdot) \Colon \bits^{\il{\FF}}\to\bits^{\ol{\FF}}$ is a permutation for each $K$ in $\bits^{\kl{\FF}}$. We denote by $\Inv{\FF}(K,\cdot)$ the inverse of $\Ev{\FF}(K,\cdot)$.
 
-\subsection{Proposed Syntax 2}
+\subsubsection{Proposed Syntax 2}
 
 The definition below is intended as a faithful rendition of the definition presented in class.
 
@@ -19,7 +19,7 @@ The definition below is intended as a faithful rendition of the definition prese
 	\end{itemize}
 \end{defn}
 
-\subsection{Proposed Syntax 3}
+\subsubsection{Proposed Syntax 3}
 
 I now give a slightly different proposed definition.\footnote{In the below I adopt that algorithms will always be considered to be PT unless specified otherwise.
 Perhaps also the convention that any operation/algorithm applied to $\bot$ returns $\bot$ (in particular that the boolean $\bot=x$ equals $\bot$ for all $x$.)}
