@@ -1,19 +1,91 @@
 %!TEX root = ../ff.tex
 
-\heading{One-Way Function}
+\begin{figure}[t]
+\threeCols{0.2}{0.2}{0.25}
+{
+\vspace{-1.0em} % TODO: temporary fix
+\procedure{Game $\gOW{\FF,\advA}(\secParam)$}
+  {
+    \FKey\getsr\Kg{\FF}(\secIn)\\
+    x\getsr\Dom{\FF}(\secParam,\FKey)\\
+    y\gets\Ev{\FF}(\secIn,\FKey,x)\\
+    x'\getsr\advA(\secIn,\FKey,y)\\
+	y'\gets\Ev{\FF}(\secIn,\FKey,x')\\
+    \pcreturn (y'=y)
+  }
+}
+{
+\vspace{-1.0em} % TODO: temporary fix
+\procedure{Game $\gSOW{\FF,\advA,\sampS}(\secParam)$}
+  {
+    \FKey\getsr\Kg{\FF}(\secIn)\\
+    x\getsr\sampS(\secIn,\FKey)\\
+    y\gets\Ev{\FF}(\secIn,\FKey,x)\\
+    x'\getsr\advA(\secIn,\FKey,y)\\
+	y'\gets\Ev{\FF}(\secIn,\FKey,x')\\
+    \pcreturn (y'=y)
+  }
+}
+{
+\vspace{-1.0em} % TODO: temporary fix
+\procedure{Game $\gMSOW{\FF,\advA,\sampS}(\secParam)$}
+  {
+    \FKey\getsr\Kg{\FF}(\secIn)\\
+    \bx\getsr\sampS(\secIn,\FKey)\\
+	\pcfor i = 1..\size{\bx} \pcdo \\
+	\pcind \by[i]\gets\Ev{\FF}(\secIn,\FKey,\bx[i])\\
+    x'\getsr\advA(\secIn,\FKey,\by)\\
+	y'\gets\Ev{\FF}(\secIn,\FKey,x')\\
+    \pcreturn (y'\in\by)
+  }
+}
+\figvspace
+\caption{Games defining
+           one-wayness of function family $\FF$,
+		   one-wayness of function family $\FF$ with respect to an input sampler $\sampS$,
+		   and one-wayness of function family $\FF$ with respect to a correlated-input sampler $\sampS$.}
+\label{fig-sample-game}
+\label{fig-ff-ow}
+\label{fig-ff-sow}
+\label{fig-ff-msow}
+\hrulefill
+\end{figure}
 
-One-way functions were originally defined by~\cite{}.
-Our formalization is based on the game $\gOW{\FF,\advA}$, as shown in \figref{fig-ff-ow}.
-It is associated with a family of functions $\FF$ and an adversary $\advA$.
-The game samples a random key $\key$ and input $x$ for $\FF$.
-It then applies $\FF$ to $x$ with $\key$ to obtain the output $y$.
-The goal of the adversary, given $\key$ and $y$, is to produce $x'$ such that $\FF$ applied to $x'$ with $\key$ outputs $y$.
-
-First the definition presented in class:
+\heading{One-way functions.}
+Consider game $\gOW{\FF,\advA}(\secParam)$ of \figref{fig-ff-ow} associated to a function family $\FF$ and an adversary $\advA$.
+The game runs $\Kg{\FF}$ to generate a function key $\FKey$, and samples a uniformly random input $x$ for function $\Ev{\FF}(\secIn,\FKey,\cdot)$.
+It then computes the corresponding output $y$.
+The goal of the adversary, given $\FKey$ and $y$, is to produce $x'$ such that $\Ev{\FF}(\secIn,\FKey,x') = y$.
 \begin{defn}
-	Let $\FF$ be a family of functions. $\FF$ is one-way if $\forall$ PT $\advA$, the function $\owAdv{\FF,\advA}{\cdot}$ is negligible where $\owAdv{\FF,\advA}{\secParam}=\Pr[\gOW{\FF,\advA}(\secParam)]$.
+  Let $\FF$ be a family of functions.
+  $\FF$ is one-way if $\owAdv{\FF,\advA}{\cdot}$ is negligible for all PT $\advA$,
+  where $\owAdv{\FF,\advA}{\secParam}=\Pr[\gOW{\FF,\advA}(\secParam)]$ for all $\secParam\in\N$.
 \end{defn}
 
+\heading{Input sampler.}
+Let $\FF$ be a function family.
+An input sampler $\sampS$ for $\FF$ is a PT algorithm that takes $\secIn$ and a function key $\FKey\in[\Kg{\FF}(\secIn)]$ to return an input value $x\in\Dom{\FF}(\secParam,\FKey)$.
+
+\heading{Functions one-way with respect to a input sampler.}
+Consider game $\gSOW{\FF,\advA}(\secParam)$ of \figref{fig-ff-sow} associated to a function family $\FF$, an adversary $\advA$, and an input sampler $\sampS$ for $\FF$.
+The game runs $\Kg{\FF}$ to generate a function key $\FKey$, and uses the input sampler $\sampS$ to sample an input $x$ from some distribution over $\Dom{\FF}(\secParam,\FKey)$.
+The adversary gets $\FKey$, $y=\Ev{\FF}(\secIn,\FKey,x)$ as input, and has to find any input $x'$ such that $y=\Ev{\FF}(\secIn,\FKey,x')=y$.
+\begin{defn}
+  Let $\FF$ be a family of functions.
+  Let $\sampS$ be an input sampler for $\FF$.
+  $\FF$ is one-way with respect to $\sampS$ if $\sowAdv{\FF,\advA,\sampS}{\cdot}$ is negligible for all PT $\advA$,
+  where $\sowAdv{\FF,\advA}{\secParam}=\Pr[\gSOW{\FF,\advA}(\secParam)]$ for all $\secParam\in\N$.
+\end{defn}
+
+\heading{Multi-input sampler.}
+Let $\FF$ be a function family.
+A multi-input sampler $\sampS$ for $\FF$ specifies a PT algorithm $\run{\sampS}$ and a function $\vl{\sampS}\colon\N\to\N$.
+Multi-input sampling algorithm takes $\secIn$ and a function key $\FKey\in[\Kg{\FF}(\secIn)]$ to return a vector of input values $\bx$ such that $\size{\bx} = \vl{\sampS}(\secParam)$ and $\bx[i]\in\Dom{\FF}(\secParam,\FKey)$ for all $\secParam\in\N$ and all $i\in[\vl{\sampS}(\secParam)]$.
+
+\heading{Functions one-way with respect to a multi-input sampler.}
+...
+
+\iffalse
 \red{
 One potential problem with the above is that it does not guarantee $\Dom{\FF}(\secParam,\key)$ can be sampled from efficiently.
 So the existence of a OWF will then \emph{not} imply all the things we want it to (i.e. that a PRG exists).
@@ -27,36 +99,4 @@ Now a definition based on syntax 3:
 \end{defn}
 
 We let $\setOW$ denote the set of all one-way functions.
-
-\begin{figure} [t]
-%\twoCols{0.23}{0.23}
-% The pseudocode doesn't like twoCols *sad face*
-% I don't like the line spacing either.
-\fbox
-{
-\procedure{Game $\gOW{\FF,\advA}(\secParam)$}
-  {
-    \key\getsr\Keys{\FF}(\secParam);\ 
-    x\getsr\Dom{\FF}(\secParam,\key)\\
-    y\gets \Ev{\FF}(\secIn,\key,x);\ 
-    x'\getsr\advA(\secIn,\key,y)\\
-    \pcreturn (\Ev{\FF}(\secIn,\key,x')=y)
-  }
-}
-\fbox
-{
-\procedure{Game $\gOW{\FF,\advA}(\secParam)$}
-  {
-    \key\getsr\Kg{\FF}(\secIn);\ 
-    x\getsr\Is{\FF}(\secIn,\key)\\
-    y\gets \Ev{\FF}(\secIn,\key,x);\ 
-    x'\getsr\advA(\secIn,\key,y)\\
-    \pcreturn (\Ev{\FF}(\secIn,\key,x')=y)
-  }
-}
-\vspace{-2ex}
-\caption{Games defining ow security of function family $\FF$.}
-\label{fig-ff-ow}
-\hrulefill
-\end{figure}
-
+\fi
