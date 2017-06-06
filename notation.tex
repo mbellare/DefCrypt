@@ -31,5 +31,5 @@ Adversaries are algorithms.
 We use the code-based game-playing framework of Bellare and Rogaway~\cite{EC:BelRog06}.
 (See \figref{fig-sample-game} for an example.)
 By $\Pr[\gameG]$ we denote the probability that the execution of game $\gameG$ results in the game returning $\true$.
-In games, integer variables are assumed to be initialized to $0$, set variables to the empty set, and Boolean variables to $\false$. %string variables to the empty string, and tables are initially empty.
+In games, integer variables are assumed to be initialized to $0$, set variables to the empty set, table entries to $\bot$, and Boolean variables to $\false$. %string variables to the empty string, and tables are initially empty.
 We say that $f\Colon\N\to\R$ is negligible if for every positive polynomial $p$, there exists $\secParam_p\in\N$ such that $f(\secParam) < 1/p(\secParam)$ for all $\secParam \geq \secParam_p$.
