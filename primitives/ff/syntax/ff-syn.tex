@@ -1,54 +1,67 @@
 %!TEX root = ../ff.tex
 
-We sketch three options of how the syntax for function families might be specified.
+\heading{Function families.}
+A family of functions $\FF$ specifies PT algorithms $\Kg{\FF}$, $\Ev{\FF}$ and parameterized sets $\Dom{\FF}$, $\Rng{\FF}$.
+Key generation algorithm $\Kg{\FF}$ takes a security parameter $\secIn$ to return a function key $\FKey$.
+Deterministic evaluation algorithm $\Ev{\FF}$ takes $\secIn, \FKey$, and an input $x\in\Dom{\FF}(\secParam, \FKey)$ to return an output $y\in\Rng{\FF}(\secParam, \FKey)$, where $\Dom{\FF}(\secParam, \FKey)$ is the domain and $\Rng{\FF}(\secParam, \FKey)$ is the range of function $\Ev{\FF}(\secIn, \FKey, \cdot)$.
 
-A family of functions $\FF$ defines $\Ev{\FF} \Colon \Keys{\FF} \cross \Dom{\FF}\to \Rng{\FF}$ which is a two-argument function that takes a key $K$ in the key space $\Keys{\FF}$, an input $x$ in the domain $\Dom{\FF}$ and returns an output $\FF(K,x)$ in the range $\Rng{\FF}$. We say $\FF$ has key length $\kl{\FF}$ if
-$\Keys{\FF}=\bits^{\kl{\FF}}$; output length $\ol{\FF}$ if $\Rng{\FF}=\bits^{\ol{\FF}}$; and input length $\il{\FF}$ if $\Dom{\FF}=\bits^{\il{\FF}}$.
+\heading{Puncturable function families.}
+A \emph{puncturable} function family $\FF$ specifies additional PT algorithms $\PKg{\FF}$ and $\PEv{\FF}$.
+Punctured key generation algorithm $\PKg{\FF}$ takes $\secIn$, a function key $\FKey\in[\Kg{\FF}(\secIn)]$ and a target input $x^*\in\Dom{\FF}(\secParam,\FKey)$ to return a ``punctured'' function key $\PFKey$.
+Deterministic punctured evaluation algorithm $\PEv{\FF}$ takes $\secIn, \PFKey$ and an input $x\in\Dom{\FF}(\secParam,\FKey)$ to return an output $y\in\Rng{\FF}(\secParam, \FKey)$.
+The correctness of punctured evaluation requires that $\PEv{\FF}(\secIn, \PFKey, x) = \Ev{\FF}(\secIn, \FKey, x)$ for
+  all $\secParam\in\N$,
+  all $\FKey\in[\Kg{\FF}(\secIn)]$,
+  all $x^*\in\Dom{\FF}(\secParam, \FKey)$,
+  all $\PFKey\in[\PKg{\FF}(\secIn, \FKey, x^*)]$
+  and all $x\in\Dom{\FF}(\secParam, \FKey)\setminus\{x^*\}$.
 
-We say that $\FF$ is a \emph{block cipher} if $\il{\FF}=\ol{\FF}$ and $\Ev{\FF}(K,\cdot) \Colon \bits^{\il{\FF}}\to\bits^{\ol{\FF}}$ is a permutation for each $K$ in $\bits^{\kl{\FF}}$. We denote by $\Inv{\FF}(K,\cdot)$ the inverse of $\Ev{\FF}(K,\cdot)$.
+\heading{Trapdoor function families.} 
+A \emph{trapdoor} function family $\FF$ specifies additional PT algorithms $\TKg{\FF}$ and $\TInv{\FF}$.
+Trapdoored key generation algorithm $\TKg{\FF}$ takes $\secIn$ to return a pair of keys $(\FKey, \TFKey)$, where $\FKey$ is a function key and $\TFKey$ is a function trapdoor key.
+Trapdoor inverse evaluation algorithm $\TInv{\FF}$ takes $\secIn$, $\TFKey$ and an output $y\in\Rng{\FF}(\secParam, \FKey)$ to return an input $x\in\Dom{\FF}(\secParam, \FKey)$.
+For any $\secParam\in\N$ the key generation algorithm $\Kg{\FF}(\secIn)$ is defined to run $\TKg{\FF}(\secParam)$ in order to produce $(\FKey, \TFKey)$, and to return $\FKey$ as its output value.
+The correctness of inverse evaluation requires that $\TInv{\FF}(\secIn, \TFKey, \Ev{\FF}(\secIn, \FKey, x)) = x$ for all $\secParam\in\N$, all $(\FKey, \TFKey)\in[\TKg{\FF}(\secIn)]$ and all $x\in\Dom{\FF}(\secParam, \FKey)$.
 
-\subsection{Proposed Syntax 2}
+\heading{Extended syntax for function families.}
+Let $\FF$ be a function family.
+Let $\Keys{\FF}$ be the parameterized set such that $\Keys{\FF}(\secParam) = [\Kg{\FF}(\secIn)]$ for all $\secParam\in\N$.
+We say that $\Keys{\FF}$ is the key space of $\FF$, $\Dom{\FF}$ is the domain of $\FF$, and $\Rng{\FF}$ is the range of $\FF$.
+Let $\kl{\FF},\il{\FF},\ol{\FF}\colon\N\to\N$. 
+We say that $\kl{\FF}$ is the key length of $\FF$, $\il{\FF}$ is the input length of $\FF$, and $\ol{\FF}$ is the output length of $\FF$ if $\Keys{\FF}(\secParam) = \bits^{\kl{\FF}(\secParam)}$, $\Dom{\FF}(\secParam,\FKey) = \bits^{\il{\FF}(\secParam)}$, and $\Rng{\FF}(\secParam, \FKey) = \bits^{\ol{\FF}(\secParam)}$ for all $\secParam\in\N$ and all $\FKey\in[\Kg{\FF}(\secParam)]$, respectively.
 
-The definition below is intended as a faithful rendition of the definition presented in class.
+\heading{Block ciphers.}
+Let $\FF$ be a function family with input length $\il{\FF}$ and output length $\ol{\FF}$, such that $\il{\FF}=\ol{\FF}$.
+Function family $\FF$ is a block cipher if it specifies an additional PT algorithm $\Inv{\FF}$ as follows.
+Inverse evaluation algorithm $\Inv{\FF}$ takes $\secIn$, $\FKey\in[\Kg{\FF}(\secIn)]$ and an output $y\in\Rng{\FF}(\secParam, \FKey)$ to return an input $x\in\Dom{\FF}(\secParam. \FKey)$.
+The correctness of inverse evaluation requires that $\Inv{\FF}(\secIn, \FKey, \Ev{\FF}(\secIn, \FKey, x)) = x$ for all $\secParam\in\N$, all $\FKey\in[\Kg{\FF}(\secIn)]$, and all $x\in\Dom{\FF}(\secParam, \FKey)$.
 
-\begin{defn}
-	A family of functions $\FF$ specifies:
-	\begin{itemize}
-		\item $\forall \secParam\in\N$: a set $\Keys{\FF}(\secparam)$ of keys
-		\item $\forall \key\in\Keys{\FF}(\secparam)$: a function $\Ev{\FF}(\secIn,\key,\cdot):\Dom{\FF}(\secparam,\key)\to\Rng{\FF}(\secparam,\key)$
-	\end{itemize}
-\end{defn}
+\heading{Input- and output- sampleable function families.}
+An input-sampleable function family $\FF$ specifies additional PT algorithm $\Is{\FF}$.
+This algorithm takes $\secIn$, a function key $\FKey\in[\Kg{\FF}(\secParam)]$ to return an input $x\in\Dom{\FF}(\secParam,\FKey)$.
+An output-sampleable function family $\FF$ specifies additional PT algorithm $\Os{\FF}$.
+This algorithm takes $\secIn$, a function key $\FKey\in[\Kg{\FF}(\secParam)]$ to return an output $y\in\Rng{\FF}(\secParam,\FKey)$.
 
-\subsection{Proposed Syntax 3}
+\heading{Other primitives and extensions.}
+Puncturable function families is a special case of constrained function families.
+These notions were concurrently and independently introduced in \cite{AC:BonWat13,CCS:KPTZ13,PKC:BoyGolIva14}.
 
+It can be useful to consider different types of function families.
+For example, one can specify the notion of the pre-image size of a function family, and use it to define what does it mean for a function family to be injective or to have a polynomial pre-image size (e.g.~see~\cite{AC:BelSteTes14}).
+
+
+\iffalse
+\heading{Function families.}
+We say that $\FF$ is injective if the function $\FEv(\secIn,\FKey,\cdot)\Colon\FInpSet(\secParam)\to\FOutSet(\secParam)$ is injective for all $\secParam\in\N$ and $\FKey\in [\FKg(\secIn)]$.
+	
 I now give a slightly different proposed definition.\footnote{In the below I adopt that algorithms will always be considered to be PT unless specified otherwise.
 Perhaps also the convention that any operation/algorithm applied to $\bot$ returns $\bot$ (in particular that the boolean $\bot=x$ equals $\bot$ for all $x$.)}
-
-\begin{defn}
-	A family of functions $\FF$ specifies:
-	\begin{itemize}
-		\item randomized key generation algorithm $\Kg{\FF}$, which takes as input the security parameter $\secIn$ and outputs a key $\key$
-		\item deterministic evaluation algorithm $\Ev{\FF}$,  which maps the security parameter $\secIn$,  key $\key$, and input $x$ to output string $y$ 
-	\end{itemize}
-\end{defn}
-
-We now introduce some useful notation.
-\begin{defn}
-	Let $\FF$ be a family of functions.
-	\begin{itemize}
-		\item The keyspace of $\FF$, $\Keys{\FF}$, is defined by $\Keys{\FF}(\secParam)=[\Kg{\FF}(\secIn)]$.
-		\item The domain of $\FF$, $\Dom{\FF}$, is defined by $\Dom{\FF}(\secParam,\key)=\set{x}{\Ev{\FF}(\secParam,\key,x)\neq\bot}$.
-		\item A range of $\FF$ is a function $\Rng{\FF}$ satisfying $\Ev{\FF}(\secIn,\key,x)\in\Rng{\FF}(\secParam,\key)$ for all $\secParam\in$ and $x\in\Dom{\FF}(\secParam,\key)$.
-	\end{itemize}
-\end{defn}
 
 \begin{defn}
 	An input-sampleable family of functions $\FF$ is a family of functions which additionally specifies a randomized algorithm $\Is{\FF}$.
 	This algorithm outputs an $x\in\Dom{\FF}(\secParam,\key)$ when given security parameter $\secIn$ and key $\key\in\Keys{\FF}(\secParam)$ as inputs.  
 \end{defn}
 
-We say $\FF$ has key length $\kl{\FF}$ if $\Keys{\FF}(\secParam)=\bits^{\kl{\FF}(\secParam)}$;
-input length $\il{\FF}(\secParam)$ if $\Dom{\FF}(\secParam,\key)=\bits^{\il{\FF}(\secParam)}$ for all $\key\in\Keys{\FF}(\secParam)$;
-and
-output length $\ol{\FF}(\secParam)$ if $\Rng{\FF}(\secParam,\key)=\bits^{\ol{\FF}(\secParam)}$.
 In this case we assume $\Kg{\FF}$ is the algorithm which samples $\key\in\bits^{\kl{\FF}(\secParam)}$ uniformly at random and $\Is{\FF}$ is the algorithm which samples $x\in\bits^{\il{\FF}(\secParam)}$ uniformly at random. 
+
+\fi

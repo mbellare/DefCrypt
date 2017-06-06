@@ -210,6 +210,7 @@
 % Figure Stuff
 % ==================================================================
 
+\newcommand{\figvspace}{\vspace{-1.0em}}
 \newcommand{\gamesfontsize}{\small}
 
 \newcommand{\mpage}[2]{\begin{minipage}{#1\textwidth}
@@ -523,7 +524,7 @@
 \newcommand{\suchthat}{{\mbox{s.t.\ }}}
 
 % ==================================================================
-% Set Stuff
+% Set Stuff & Other Notaton
 % ==================================================================
 
 \newcommand{\sett}[1]{\{#1\}}
@@ -531,6 +532,10 @@
 
 \newcommand{\setfont}[1]{\mathsl{#1}}
 \newcommand{\setX}{\setfont{X}}
+
+\newcommand{\bx}{{\bf x}}
+\newcommand{\by}{{\bf y}}
+\newcommand{\size}[1]{|#1|}
 
 % ==================================================================
 % Probability/Expected Value
@@ -571,6 +576,11 @@
 
 %Adversaries
 \newcommand{\advfont}[1]{#1}
+\newcommand{\state}{\mathsl{st}}
+
+\newcommand{\init}[1]{\schalg{#1}{init}}
+\newcommand{\run}[1]{\schalg{#1}{run}}
+\newcommand{\vl}[1]{\schalg{#1}{vl}}
 
 \newcommand{\advA}{\advfont{A}}
 \newcommand{\advB}{\advfont{B}}
@@ -598,13 +608,18 @@
 \newcommand{\NS}[1]{\schalg{#1}{NS}}
 
 \newcommand{\Kg}[1]{\schalg{#1}{Kg}}
+\newcommand{\PKg}[1]{\schalg{#1}{PKg}}
+\newcommand{\TKg}[1]{\schalg{#1}{TKg}}
 \newcommand{\Ev}[1]{\schalg{#1}{Ev}}
-\newcommand{\Inv}[1]{\schalg{#1}{In}}
+\newcommand{\PEv}[1]{\schalg{#1}{PEv}}
+\newcommand{\Inv}[1]{\schalg{#1}{Inv}}
+\newcommand{\TInv}[1]{\schalg{#1}{TInv}}
 \newcommand{\Enc}[1]{\schalg{#1}{Enc}}
 \newcommand{\Dec}[1]{\schalg{#1}{Dec}}
 \newcommand{\Obf}[1]{\schalg{#1}{Obf}}
 \newcommand{\Samp}[1]{\schalg{#1}{Samp}}
 \newcommand{\Is}[1]{\schalg{#1}{Is}}
+\newcommand{\Os}[1]{\schalg{#1}{Os}}
 
 \newcommand{\ol}[1]{\schalg{#1}{ol}}
 \newcommand{\il}[1]{\schalg{#1}{il}}
@@ -619,6 +634,7 @@
 \newcommand{\true}{\mathsf{true}}
 \newcommand{\false}{\mathsf{false}}
 \newcommand{\bad}{\mathsf{bad}}
+\newcommand{\win}{\mathsf{win}}
 \newcommand{\ind}{\hspace*{10pt}}
 
 %Games
@@ -627,7 +643,12 @@
 \newcommand{\game}[2]{\gameG^{\rm #1}_{#2}}
 
 \newcommand{\gOW}[1]{\game{ow}{#1}}
+\newcommand{\gSOW}[1]{\game{sow}{#1}}
+\newcommand{\gMSOW}[1]{\game{msow}{#1}}
 \newcommand{\gPRF}[1]{\game{prf}{#1}}
+\newcommand{\gPPRF}[1]{\game{pprf}{#1}}
+\newcommand{\gCR}[1]{\game{cr}{#1}}
+\newcommand{\gTCR}[1]{\game{tcr}{#1}}
 
 \newcommand{\gROR}[1]{\game{ror}{#1}}
 \newcommand{\gmuIND}[1]{\game{mu\mbox{-}ind}{#1}}
@@ -639,7 +660,12 @@
 \newcommand{\genAdv}[3]{\mathbf{Adv}^{\rm #1}_{#2}(#3)}
 
 \newcommand{\owAdv}[2]{\genAdv{ow}{#1}{#2}}
+\newcommand{\sowAdv}[2]{\genAdv{sow}{#1}{#2}}
+\newcommand{\msowAdv}[2]{\genAdv{msow}{#1}{#2}}
 \newcommand{\prfAdv}[2]{\genAdv{prf}{#1}{#2}}
+\newcommand{\pprfAdv}[2]{\genAdv{pprf}{#1}{#2}}
+\newcommand{\crAdv}[2]{\genAdv{cr}{#1}{#2}}
+\newcommand{\tcrAdv}[2]{\genAdv{tcr}{#1}{#2}}
 
 \newcommand{\rorAdv}[2]{\genAdv{ind\$}{#1}{#2}}
 \newcommand{\muindAdv}[2]{\genAdv{mu\mbox{-}ind}{#1}{#2}}
@@ -669,12 +695,15 @@
 \newcommand{\FnO}{\procfont{Fn}}
 
 %Keys
+\newcommand{\FKey}{\mathsl{fk}}
+\newcommand{\TFKey}{\mathsl{td}_{\mathsl{fk}}}
+\newcommand{\PFKey}{\mathsl{fk}^*}
+
 \newcommand{\key}{K}
 \newcommand{\fkey}{K}
 \newcommand{\nkey}{K}
 
 \newcommand{\pkey}{pk}
 \newcommand{\skey}{sk}
-
 
 \endinput

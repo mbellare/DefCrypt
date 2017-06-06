@@ -1,0 +1,342 @@
+% DefCrypt main.tex
+% Started 4/2/2017
+
+\documentclass[11pt,twoside]{article}
+
+% ==================================================================
+% Subfile Package/Commands
+% ==================================================================
+
+\usepackage{subfiles,algorithm2e}
+
+\newcommand{\onlyinsubfile}[1]{#1}
+\newcommand{\notinsubfile}[1]{}
+
+\makeatletter
+\def\input@path{{./}{../../}}
+\makeatother
+
+% ==================================================================
+% Crypto Packages
+% ==================================================================
+
+\usepackage{defcrypt}
+\usepackage{cryptocode}
+
+
+% ==================================================================
+% Document
+% ==================================================================
+
+\begin{document}
+    \renewcommand{\onlyinsubfile}[1]{}
+    \renewcommand{\notinsubfile}[1]{#1}
+  
+\section{Syntax}
+
+An \emph{All-Or-Nothing-Transform} $\schemefont{AONT}$ specifies two algorithms $(\schemefont{AONT.Transform}, \schemefont{AONT.Inverse})$, and a block length $\schemefont{AONT.bl}$. Then, we can associate with $\mathsf{AONT}$ a domain and range, $\mathsf{AONT.Dom}, \mathsf{AONT.Rng}\subset \{\bits^\schemefont{AONT.bl}\}^*$(the set of strings having length that is a multiple of $\mathsf{AONT.bl}$). We call the domain the ``message sequences'' and the range the ``pseudo-message sequences''. Then, we have that $\mathsf{AONT.Transform}: \mathsf{AONT.Dom}\rightarrow \mathsf{AONT.Rng}$, a randomized algorithm, and  $\mathsf{AONT.Inverse}: \mathsf{AONT.Rng}\rightarrow \mathsf{AONT.Dom}$, a deterministic algorithm. 
+
+
+\section{Correctness}
+The correctness condition for $\schemefont{AONT}$ is $$\Prob{\schemefont{AONT.Inverse}(\schemefont{AONT.Transform}((m_1,m_2\dots m_s))=(m_1,m_2,\dots m_s))} = 1$$ where the probability is taken over all possible message sequences $(m_1,m_2\dots m_s)$ and all possible randomness of the $\schemefont{AONT.Transform}$ function. We also assume that (assumed but not explicitly stated in all the papers): $$\Prob{M,N \in \mathsf{AONT.Dom}, |M|=|N|, X\getsr \mathsf{AONT.Transform}(M), Y \getsr\mathsf{AONT.Transform}(N):|X|=|Y|}=1$$
+
+\section{Rivest (1997)}
+
+\begin{figure}[H]
+\oneCol{0.7}
+{
+\underline{$\gamefont{G}_{\mathsf{AONT}}^\text{ind}(\advA)$}
+
+\begin{algorithm}[H]
+$b \getsr \bits$\\
+$b' \getsr \advA^{\LRO}$\\
+\Return $(b=b')$
+\end{algorithm}
+
+\smallskip
+\underline{$\LRO(M,N,i)$}
+
+\begin{algorithm}[H]
+\If{$|M|\neq|N|$}{\Return $\bot$} 
+\eIf{$b=0$}{$(m_1,m_2,\dots m_{s'})\getsr \mathsf{AONT.Transform}(M)$}{
+$(m_1,m_2,\dots m_{s'})\getsr \mathsf{AONT.Transform}(N)$}
+\If{$i>s'$}{\Return $\bot$}  
+$m_i\gets \epsilon$\\
+{\Return $(m_1,m_2,\dots m_{s'})$}
+\end{algorithm}
+}
+\end{figure}
+
+Then we say that the indistinguishability adversary $\advA$ has AONT-IND advantage: 
+
+$$\textbf{Adv}^\text{aont-ind}_\mathsf{AONT}(\advA)=2\cdot\Prob{\gamefont{G}_{\mathsf{AONT}}^\text{ind}(\advA)} - 1$$
+
+\section{Boyko (1999)/ Canetti et. al (2000)}
+
+\begin{figure}[H]
+\oneCol{0.5}
+{
+\underline{$\gamefont{G}_{\mathsf{AONT},l}^\text{leak}(\advA)$}
+
+\begin{algorithm}[H]
+$b \getsr \bits$\\
+$b' \getsr \advA^{\LRO}$\\
+\Return $(b=b')$
+\end{algorithm}
+
+\smallskip
+\underline{$\LRO(M,N,S)$}
+
+\begin{algorithm}[H]
+\If{$|M|\neq|N|$}{\Return $\bot$}  
+\eIf{$b=0$}{
+$y\getsr \mathsf{AONT.Transform}(M)$\\
+}{
+$y\getsr \mathsf{AONT.Transform}(N)$\\
+}
+\If{$(|S|\neq|y|)\lor(\mathsf{Hamm}(S)>(|y| - l))$}{\Return $\bot$}
+$y\gets y\mathrel{\&} S$\\
+\Return $y$
+\end{algorithm}
+}
+\end{figure}
+
+\emph{Note that $|M|$ is the length of the string $M$ in bits, $\mathrel{\&}$ is a bitwise AND and $\mathsf{Hamm}(M)$ takes the hamming weight of $M$}
+
+Then we say that the leakage adversary $\advA$ has $l$-AONT-LEAK advantage: 
+
+$$\textbf{Adv}^\text{aont-leak}_{\mathsf{AONT},l}(\advA)=2\cdot\Prob{\gamefont{G}_{\mathsf{AONT},l}^\text{leak}(\advA)} - 1$$
+
+\section{Leakage Resilience Model} 
+
+\begin{figure}[H]
+\oneCol{0.5}
+{
+\underline{$\gamefont{G}_{\mathsf{AONT},m}^\text{lr}(\advA)$}
+
+\begin{algorithm}[H]
+$b \getsr \bits$\\
+$b' \getsr \advA^{\LRO}$\\
+\Return $(b=b')$
+\end{algorithm}
+
+\smallskip
+\underline{$\LRO(M,N,C)$}
+
+\begin{algorithm}[H]
+\If{$|M|\neq|N|$}{\Return $\bot$}  
+\eIf{$b=0$}{
+$y\getsr \mathsf{AONT.Transform}(M)$\\
+}{
+$y\getsr \mathsf{AONT.Transform}(N)$\\
+}
+\If{$(C\notin\mathcal{C}_{|y|,(|y| - m)})$}{\Return $\bot$}
+\Return $C(y)$
+\end{algorithm}
+}
+\end{figure}
+
+\emph{Note that $\mathcal{C}_{n,m}$ is the set of boolean circuits taking $n$ inputs and $m$ outputs, expressed in a string in some reasonable encoding. Then, for $C\in \mathcal{C}_{n,m}$, when we run $C(S)$ for some binary string $S$ of length $n$, $C$ will take as input the bits of $S$ and return a $m$ bit long string.}
+
+Then we say that the leakage resilience adversary $\advA$ has $m$-AONT-LR advantage: 
+
+$$\textbf{Adv}^\text{aont-lr}_{\mathsf{AONT},m}(\advA)=2\cdot\Prob{\gamefont{G}_{\mathsf{AONT},m}^\text{lr}(\advA)} - 1$$
+
+\section{Relationship between Notions} 
+
+\subsection{$\mathsf{AONT.bl-AONT-LEAK}\implies\schemefont{AONT-IND}$}
+
+\begin{theorem}
+For any $\mathsf{AONT-IND}$ adversary $\advA$, we can construct $\mathsf{AONT.bl-AONT-LEAK}$ adversary $\advB$, running in the same time and making the same number of queries, such that $$\textbf{Adv}^\text{aont-ind}_{\mathsf{AONT}}(\advA)\le\textbf{Adv}^\text{aont-leak}_{\mathsf{AONT},\mathsf{AONT.bl}}(\advB)$$
+\end{theorem}
+
+Here is the adversary:
+
+\begin{figure}[H]
+\oneCol{0.5}
+{
+\underline{$\advB^\LRO$}
+
+\begin{algorithm}[H]
+$b\getsr \advA^{\procfont{SimLR}}$\\
+\Return $b$
+\end{algorithm}
+
+\underline{$\procfont{SimLR}(M,N,i)$}
+
+\begin{algorithm}[H]
+$mask\gets \epsilon$\\
+$s\gets \lceil\frac{|M|}{\mathsf{AONT.bl}}\rceil$\\
+\For{$j=1,2,\dots s$}
+{
+\eIf{$j\neq i$}{$mask\gets mask||1^\mathsf{AONT.bl}$}{$mask\gets mask||0^\mathsf{AONT.bl}$}}
+\Return $\LRO(M,N,mask)$
+\end{algorithm}
+}
+\end{figure}
+
+\subsection{$l\schemefont{-AONT-LR}\implies l\schemefont{-AONT-LEAK}$}
+
+\begin{theorem}
+For any $l-\schemefont{AONT-LEAK}$ adversary $\advA$, we can construct $l-\schemefont{AONT-LR}$ adversary $\advB$, running in the same time and making the same number of queries, such that $$\textbf{Adv}^\text{aont-leak}_{\mathsf{AONT},l}(\advA)\le\textbf{Adv}^\text{aont-lr}_{\mathsf{AONT},l}(\advB)$$
+\end{theorem}
+
+Here is the adversary:
+
+\begin{figure}[H]
+\oneCol{0.5}
+{
+\underline{$\advB^\LRO$}
+
+\begin{algorithm}[H]
+$b\getsr \advA^{\procfont{SimLR}}$\\
+\Return $b$
+\end{algorithm}
+
+\underline{$\procfont{SimLR}(M,N,mask)$}
+
+\begin{algorithm}[H]
+\Return $\LRO(M,N,C_{mask})$
+\end{algorithm}
+
+\underline{$C_{mask}(X)$}
+
+\begin{algorithm}[H]
+\Return $mask \mathrel{\&} X$
+\end{algorithm}
+}
+\end{figure}
+
+
+\subsection{$\mathsf{AONT-IND} \not\Rightarrow \mathsf{AONT.bl-AONT-LEAK}$}
+
+Consider the following AONT scheme, $\mathsf{Checksum}$, which is defined for all choices of $\mathsf{Checksum.bl}$. It has $\mathsf{Checksum.Dom}=\bits^{\mathsf{Checksum.bl}}$ and $\mathsf{Checksum.Rng}=\bits^{\mathsf{Checksum.bl}^2}$:
+
+\begin{figure}[H]
+\twoCols{0.5}{0.5}
+{
+\underline{$\schemefont{Checksum.Transform}(m)$}
+\begin{algorithm}[H]
+$m'_\mathsf{Checksum.bl}\gets m$\\
+\For{$i=1,2,\dots \mathsf{Checksum.bl}-1$}
+{
+$m'_i\getsr \bits^\mathsf{Checksum.bl}$\\
+$m'_\mathsf{Checksum.bl}\gets m'_i \oplus m'_\mathsf{Checksum.bl}$\\
+}
+\Return $(m'_1,m'_2\dots m'_\mathsf{Checksum.bl})$
+\end{algorithm}
+}
+{
+\underline{$\schemefont{Checksum.Inverse}(m'_1,m'_2\dots m'_\mathsf{Checksum.bl})$}
+
+\begin{algorithm}[H]
+$m\gets m'_\mathsf{Checksum.bl}$\\
+\For{$i=1,2,\dots \mathsf{Checksum.bl}-1$}
+{
+$m\gets m'_i \oplus m$\\
+}
+\Return $m$ 
+\end{algorithm}
+}
+\end{figure} 
+
+First, let's show that $\mathsf{Checksum}$ is $\mathsf{Checksum.bl-AONT-IND}$ secure. Since the pseudo-message blocks are such that $m=\oplus_{i=1}^\mathsf{Checksum.bl} m'_i$, and $\mathsf{Checksum.bl}-1$ blocks were chosen at random, independent of $m$, the loss of any one block will render the distribution of the remaining blocks completely independent of $m$. Therefore, (much like in the one-time pad), $\textbf{Adv}^\text{aont-ind}_{\mathsf{Checksum}}(\advA)=0$ for all $\advA$.
+
+Next, we can provide a $\mathsf{Checksum.bl-AONT-LEAK}$ adversary $\advA$. 
+
+\begin{figure}[H]
+\oneCol{0.7}
+{
+\underline{$\advA^\LRO$}
+
+\begin{algorithm}[H]
+$mask\gets \epsilon$ 
+\For{$i=1,2\dots \mathsf{Checksum.bl}$}{$mask\gets mask||1^\mathsf{Checksum.bl}0$}
+$(m'_1,m'_2\dots m'_\mathsf{Checksum.bl})\gets \LRO(0^\mathsf{Checksum.bl},1^\mathsf{Checksum.bl},mask)$\\
+$m\gets \oplus_{i=1}^\mathsf{Checksum.bl}(m'_i)$\\
+$m\gets m \mathrel{\&} 1^\mathsf{Checksum.bl}0$\\
+\eIf{$m=0^\mathsf{Checksum.bl}$}{\Return 0}{\Return 1}
+\end{algorithm}
+}
+\end{figure}
+
+Then we have that $\textbf{Adv}^\text{aont-leak}_{\mathsf{Checksum},\mathsf{Checksum.bl}}(\advA)=1$, since the adversary is able to retrieve any $\mathsf{Checksum.bl}-1$ bits of the original message. 
+
+\subsection{$\mathsf{AONT.bl-AONT-LEAK}\not\Rightarrow \mathsf{AONT.bl-AONT-LR}$}
+
+This is in the context of the RO model, specifically where a secure instance of OAEP is assumed.
+
+Consider the package transform proposed by Rivest, denoted $\mathsf{Package}$. Note that $\mathsf{Package.Dom} = \mathsf{Package.Rng}=\{X\in\bits^* : |X| \text{ is a multiple of } \mathsf{AONT.bl}\}$
+
+\begin{figure}[H]
+\twoCols{0.5}{0.5}
+{
+\underline{$\schemefont{Package.Transform}(m_1,m_2,\dots m_s)$}
+
+\begin{algorithm}[H]
+$K\getsr \bits^\schemefont{Package.bl}$\\
+$K'\getsr \bits^\schemefont{Package.bl}$\\
+$m'_{s+1}\gets K'$\\
+\For{$i=1,2\dots s$}
+{
+$m'_i\gets m_i \oplus E(K',\langle i \rangle)$\\
+$h_i\gets E(K,m'_i\oplus \langle i \rangle)$\\
+$m'_{s+1}\gets m'_{s+1}\oplus h_i$\\
+}
+\Return $(m'_1,m'_2\dots m'_s, m'_{s+1}, K)$
+\end{algorithm}
+}
+{
+\underline{$\schemefont{Package.Inverse}(m'_1,m'_2\dots m'_{s'})$}
+
+\begin{algorithm}[H]
+\If{$(s' \le 2)$}{\Return $\bot$}
+$K\gets m'_{s'}$\\
+$K'\gets m'_{s'-1}$\\
+$s\gets s'-2$\\
+\For{$(i=1,2,\dots s)$}
+{
+$h_i\gets E(K,m'_i\oplus \langle i\rangle )$\\
+$K'\gets K'\oplus h_i$
+}
+\For{$(i=1,2,\dots s)$}
+{
+$m_i\gets E(K',\langle i\rangle)\oplus m'_i$\\
+}
+\Return $(m_1,m_2\dots m_{s})$
+\end{algorithm}
+}
+\end{figure} 
+
+Then, from Boyko (1999) we know that when OAEP is used as $E$, we have that $\mathsf{Package}$ is $\mathsf{AONT.bl-AONT-IND-LEAK}$ is as secure as OAEP. We now present a $\mathsf{AONT.bl-AONT-IND-LR}$ adversary $\advA$. 
+
+\begin{figure}[H]
+\oneCol{0.7}
+{
+\underline{$\advA^\LRO$}
+
+\begin{algorithm}[H]
+$X||0^\mathsf{AONT.bl} \getsr \LRO(0^\mathsf{AONT.bl},1^\mathsf{AONT.bl},C)$\\
+\eIf{$X=1^{\mathsf{AONT.bl}}$}{\Return 1}{\Return 0}
+\end{algorithm}
+
+\underline{C(X)}
+
+\begin{algorithm}[H]
+$Y\gets\mathsf{Package.Inverse}(X)$\\
+$\Return (X||0^\mathsf{AONT.bl})$\\
+\end{algorithm}
+}
+\end{figure}
+
+Then we have that $\textbf{Adv}^\text{aont-lr}_{\mathsf{Package},\mathsf{Package.bl}}(\advA)=1$, by the correctness condition of the AONT. One can note that the $A$ runs in time proportional to the running time of $\mathsf{Package.Inverse}$, which should be PT in any usable AONT. 
+
+\end{document}
+
+
+
+
+
+
+
+

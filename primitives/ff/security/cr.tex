@@ -1,0 +1,65 @@
+%!TEX root = ../ff.tex
+
+\begin{figure}[t]
+\twoCols{0.22}{0.22}
+{
+\vspace{-1.0em} % TODO: temporary fix
+\procedure{Game $\gCR{\FF,\advA}(\secParam)$}
+  {
+    \FKey\getsr\Kg{\FF}(\secIn)\\
+	(x_0,x_1)\getsr\advA(\secIn,\FKey)\\
+	y_0\gets\Ev{\FF}(\secIn,\FKey,x_0)\\
+	y_1\gets\Ev{\FF}(\secIn,\FKey,x_1)\\
+	\win_0\gets(x_0\neq x_1)\\
+	\win_1\gets(y_0=y_1)\\
+	\pcreturn (\win_0\land\win_1)
+  }
+}
+{
+\vspace{-1.0em} % TODO: temporary fix
+\procedure{Game $\gTCR{\FF,\advA}(\secParam)$}
+  {
+    \FKey\getsr\Kg{\FF}(\secIn)\\
+	x_0\getsr\Dom{\FF}(\secParam,\FKey)\\
+	x_1\getsr\advA(\secIn,\FKey,x_0)\\
+	y_0\gets\Ev{\FF}(\secIn,\FKey,x_0)\\
+	y_1\gets\Ev{\FF}(\secIn,\FKey,x_1)\\
+	\win_0\gets(x_0\neq x_1)\\
+	\win_1\gets(y_0=y_1)\\
+	\pcreturn (\win_0\land\win_1)
+  }
+}
+\figvspace
+\caption{Games defining
+           collision-resistance of function family $\FF$,
+		   and target collision-resistance of function family $\FF$.}
+\label{fig-ff-cr}
+\label{fig-ff-tcr}
+\hrulefill
+\end{figure}
+
+\heading{Collision-resistant functions.}
+Consider game $\gCR{\FF,\advA}(\secParam)$ of \figref{fig-ff-cr} associated to a function family $\FF$ and an adversary $\advA$.
+The game runs $\Kg{\FF}$ to generate a function key $\FKey$, and gives it to the adversary $\advA$ as input.
+The adversary wins the game if it can find two distinct inputs such that function $\Ev{\FF}(\secIn,\FKey,\cdot)$ maps them to the same output.
+\begin{defn}
+  Let $\FF$ be a function family.
+  $\FF$ is collision-resistant if $\crAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$,
+  where $\crAdv{\FF,\advA}{\secParam}=\Pr[\gCR{\FF,\advA}(\secParam)]$ for all $\secParam\in\N$.
+\end{defn}
+
+\heading{Target collision-resistant functions.}
+Consider game $\gTCR{\FF,\advA}(\secParam)$ of \figref{fig-ff-tcr} associated to a function family $\FF$ and an adversary $\advA$.
+The game runs $\Kg{\FF}$ to generate a function key $\FKey$ and subsequently samples a uniformly random input value $x_0$ from the domain of function $\Ev{\FF}(\secIn, \FKey, \cdot)$.
+The adversary gets $\FKey,x_0$ as input.
+It wins the game if it can produce another input value $x_1$ such that it is distinct from $x_0$ and such that function $\Ev{\FF}(\secIn, \FKey, \cdot)$ maps both inputs values to the same output value.
+\begin{defn}
+  Let $\FF$ be a function family.
+  $\FF$ is target collision-resistant if $\tcrAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$,
+  where $\tcrAdv{\FF,\advA}{\secParam}=\Pr[\gTCR{\FF,\advA}(\secParam)]$ for all $\secParam\in\N$.
+\end{defn}
+Target collision-resistant hash functions were introduced by Naor and Yung~\cite{STOC:NaoYun89} under the name of Universal One-Way Hash Functions (UOWHF).
+Bellare and Rogaway~\cite{C:BelRog97} redefined the corresponding security notion under the name of target collision-resistance.
+
+\heading{Other security notions.}
+...

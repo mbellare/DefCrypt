@@ -22,20 +22,42 @@
 
 \usepackage{defcrypt}
 \usepackage{cryptocode}
+\undef\secparam % This command is defined in cryptocode. We define and use our own \secParam instead.
 
+% TODO: temporary fix from https://tex.stackexchange.com/questions/86211/colortbl-and-amsmath-conflict
+%\usepackage{amsmath}
+%\usepackage{colortbl}
+%%%%%%%%%% HERE COMES THE PATCH %%%%%%%%%%
+\usepackage{etoolbox}
+
+\makeatletter
+\pretocmd\start@align
+{%
+  \let\everycr\CT@everycr
+  \CT@start
+}{}{}
+\apptocmd{\endalign}{\CT@end}{}{}
+\makeatother
+%%%%%%%%%% END PATCH %%%%%%%%%%
 
 % ==================================================================
 % Document
 % ==================================================================
 
 \begin{document}
-    \renewcommand{\onlyinsubfile}[1]{}
-    \renewcommand{\notinsubfile}[1]{#1}
+  \renewcommand{\onlyinsubfile}[1]{}
+  \renewcommand{\notinsubfile}[1]{#1}
+
+  \title{DefCrypt: Definitions for Cryptography}
+  \author{UCSD CSE 209B}
+  \maketitle
+  \tableofcontents	
   
   \input{intro}
   \input{notation}
   \subfile{primitives/ff/ff}
   \subfile{primitives/se/se}
+  \subfile{primitives/ds/ds}
 
   \addcontentsline{toc}{section}{References}
   \begin{small}

@@ -1,12 +1,35 @@
-
-
 \section{Preliminaries}\label{sec-defs}
 
+\heading{Notation.}
+Let $\N =\{1,2,\ldots\}$ be the set of positive integers.
+We denote by $\secParam\in\N$ the security parameter and by $\secIn$ its unary representation. 
+%\heading{Strings.}
+Let $\emptystring$ denote the empty string.
+%If $x\in\bits^*$ is a string then $|x|$ denotes its length, $x[i]$ denotes its $i$-th bit, and $x[i..j]=x[i]\ldots x[j]$ for $1\leq i\leq j\leq |x|$.
+% By $x\concat y$ we denote the concatenation of strings $x$ and $y$.
+%\heading{Sets.}
+For $i\in\N$ we let $[i]$ denote the set $\{1, \ldots, i\}$. 
+% We denote the size of a finite set $\setX$ by $|X|$.
+If $\setX$ is a finite set, we let $x \getsr \setX$ denote picking an element of $\setX$ uniformly at random and assigning it to $x$.
 
-We let $\emptystring$ denote the empty string. If $Z$ is a string then $|Z|$ denotes its length and $Z[1..i]$ denotes bits $1$ through $i$ of $Z$. If $\setX$ is a finite set, we let $x \getsr \setX$ denote picking an element of~$\setX$ uniformly at random and assigning it to $x$.
-Algorithms may be randomized unless otherwise indicated. Running time is worst case.
+\heading{Vectors.}
+We denote vectors by boldface lowercase letters, for example $\bx$.
+%We let $[]$ denote the empty vector.
+If $\bx$ is a vector then $\size{\bx}$ denotes the number of components of $\bx$ and $\bx[i]$ denotes the $i$-th component of $\bx$, for any $1 \leq i \leq \size{\bx}$.
+We write $x\in\bx$ to mean that $x=\bx[i]$ for some $1\leq i \leq \size{x}$.
+
+\heading{Algorithms.}
+Algorithms may be randomized unless otherwise indicated.
+Running time is worst case.
+``PT'' stands for ``polynomial-time,'' whether for randomized algorithms or deterministic ones. 
 If~$A$ is an algorithm, we let $y \gets A(x_1,\ldots;r)$ denote running~$A$ with random coins $r$ on inputs $x_1,\ldots$ and assigning the output to $y$.
-We let $y \getsr A(x_1,\ldots)$ be the result of picking $r$ at random and letting $y \gets A(x_1,\ldots;r)$. We let $[A(x_1,\ldots)]$ denote the set of all possible outputs of $A$ when invoked with inputs $x_1,\ldots$.
+We let $y \getsr A(x_1,\ldots)$ be the result of picking $r$ at random and letting $y \gets A(x_1,\ldots;r)$.
+We let $[A(x_1,\ldots)]$ denote the set of all possible outputs of $A$ when invoked with inputs $x_1,\ldots$.
+Adversaries are algorithms.
 
-We use the code-based game-playing framework of BR~\cite{EC:BelRog06}. (See \figref{fig-se-mu-ind} for an example.) By $\Pr[\gameG]$ we denote the probability that the execution of game $\gameG$ results in the game returning $\true$. In games, integer variables, set variables and boolean variables are assumed initialized, respectively, to $0$, the empty set, and $\false$.
-
+\heading{Security games.}
+We use the code-based game-playing framework of Bellare and Rogaway~\cite{EC:BelRog06}.
+(See \figref{fig-sample-game} for an example.)
+By $\Pr[\gameG]$ we denote the probability that the execution of game $\gameG$ results in the game returning $\true$.
+In games, integer variables are assumed to be initialized to $0$, set variables to the empty set, and Boolean variables to $\false$. %string variables to the empty string, and tables are initially empty.
+We say that $f\Colon\N\to\R$ is negligible if for every positive polynomial $p$, there exists $\secParam_p\in\N$ such that $f(\secParam) < 1/p(\secParam)$ for all $\secParam \geq \secParam_p$.
