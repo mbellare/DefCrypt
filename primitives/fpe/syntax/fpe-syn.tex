@@ -1,18 +1,22 @@
 %!TEX root = ../fpe.tex
 
-A format-preserving encryption (FPE) scheme specifies two deterministic algorithms
+A format-preserving encryption (FPE) scheme specifies the following: \ref{SAC:BRRS09}
 \begin{itemize}
 	\item A set of keys $\Keys{\FPE}$.
-	\item A nonce-space $\NS{\FPE}$.
+	\item A tweak-space $\TS{\FPE}$.
 	\item A domain $\Dom{\FPE}$.
-	\item A deterministic encryption algorithm $\Enc{\FPE}:\Keys{\FPE}\cross\NS{\FPE}\cross\Dom{\FPE}\to\Dom{\FPE}$.
-	\item A deterministic decryption algorithm $\Dec{\FPE}:\Keys{\FPE}\cross\NS{\FPE}\cross\Dom{\FPE}\to\Dom{\FPE}$.
+	\item A deterministic encryption algorithm $\Enc{\FPE}:\Keys{\FPE}\cross\TS{\FPE}\cross\Dom{\FPE}\to\Dom{\FPE}$.
+	\item A deterministic decryption algorithm $\Dec{\FPE}:\Keys{\FPE}\cross\TS{\FPE}\cross\Dom{\FPE}\to\Dom{\FPE}$.
 \end{itemize}
-Correctness requires that for all $(\key,\nonce,\msg)\in\Keys{\FPE}\cross\NS{\FPE}\cross\Dom{\FPE}$,
+Correctness requires that for all $(\key,T,\msg)\in\Keys{\FPE}\cross\TS{\FPE}\cross\Dom{\FPE}$,
 \begin{newmath}
-	\Dec{\FPE}(\key,\nonce,\Enc{\FPE}(\key,\nonce,\msg))=\msg.
+	\Dec{\FPE}(\key,T,\Enc{\FPE}(\key,T,\msg))=\msg.
 \end{newmath}
 
 The term ``format-preserving'' refers to the fact that ciphertexts must be in the same domain (i.e. have the same format) as the messages. We are typically interested in the case when $\Dom{\FPE}$ is a finite set.
 
-Note that FPE schemes are syntactically equivalent to a tweakable blockcipher. Tweaks are not strictly necessary for an implementation of FPE (i.e. $\NS{\FPE}$ can be the empty set), but they do provide greater security.
+Note that tweakable block ciphers are a subset of FPE schemes, where the domain is defined as bit strings of some length. Although tweaks are not strictly necessary for an implementation of FPE (i.e. $\TS{\FPE}$ can be the empty set), they can provide greater security. \
+
+The definition of FPE in \ref{SAC:BRRS09} allows for the inclusion of more than one "slice" (i.e. type of format) in a particular FPE scheme. For simplicity, we have restricted the definition to one slice per scheme. \
+
+FPE schemes, being block ciphers, can be defined asymptotically \ref{SAC:BRRS09}, in which case $\Enc{\FPE}$ would be the functional equivalent of $\Ev{\F}$ and $\Dec{\FPE}$ would be the functional equivalent of $\Inv{\F}$ as specified in as in \ref{sec-defs}. However, we have instead used concrete security in our definitions because concrete security is more well-suited for real-world applications than asymptotics, and FPE was designed specifically for real-world use in data security.
