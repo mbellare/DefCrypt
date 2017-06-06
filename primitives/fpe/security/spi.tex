@@ -1,0 +1,52 @@
+%!TEX root = ../fpe.tex
+
+\heading{Single-Point Indistinguishability.}
+
+Single-point indistinguishability (SPI) concerns whether the adversary can distinguish between the encryption of a chosen message and a random point in the range. \
+
+	SPI is formalized by the game $\gSPI{}$ shown in \figref{fig-fpe-spi}, associated to FPE scheme $\FPE$ and adversary $\advA$.\
+    
+   As in PRP, the game first samples a random challenge bit $b$, with $b=1$ indicating it is in ``real'' mode and $b=0$ that it is in ``random" mode. The set $\setfont{R}$ is initialized to the empty set. \
+   
+   The adversary $\advA$ is comprised of two algorithms: $\choice{\advA}$ and $\guess{\advA}$. $\choice{\advA}$ is expected to output one point from $\TS{\FPE}$, one point from $\Dom{\FPE}$, and whatever it wants to leak ($\ell$) to $\guess{\advA}$, such as the tweak or the message. The input for $\guess{\advA}$ is, if $b=1$, an evaluation of $T, \msg$ under $\Enc{\FPE}$, or, if $b=0$, a uniformly random element from $\Dom{\FPE}$. If the output of $\guess{\advA}$ is equal to the challenge bit, the game outputs $\true$, and $\false$ otherwise.\
+   
+    The advantage of adversary $\advA$ in breaking the SPI security of $\FPE$ is defined as: \
+     \begin{center}
+    $\spiAdv{\FPE}{\advA} = 2\Pr[\gSPI{\FPE}(\advA)]- 1$.\\
+     \end{center}
+    
+  
+\begin{figure} [t]
+\begin{center}
+\fbox
+{
+\begin{pchstack}
+\procedure{Game $\gSPI{\FPE}(\advA)$}
+  {
+    b \getsr \bits \\
+    \key \getsr \Keys{\FPE}  \\
+    (T^*, \msg^*, \ell) \getsr \choice{\advA} \\
+    R \gets R \cup (T^*, \msg^*) \\
+    y_1\gets \Enc{\FPE}(\key,T^*,\msg^*)  \\
+    y_0\getsr \Dom{\FPE} \\
+    b' \getsr \guess{\advA}^{\EncO}(y_b, \ell) \\
+    \pcreturn (b' = b)
+  }
+  
+    \pchspace
+    
+\procedure{Oracle $\EncO(T,\msg)$}
+  {
+    \pcif (T, \msg) \in R \pcthen \\
+    \t \pcreturn \bot \\
+    R \gets R \cup (T, \msg) \\
+    \pcreturn \Enc{\FPE}(\key,T,\msg)
+  }
+\end{pchstack}
+}
+\end{center}
+\vspace{-2ex}
+\caption{ Game defining spi security of format-preserving encryption scheme $\FPE$.}
+\label{fig-fpe-spi}
+\hrulefill
+\end{figure}

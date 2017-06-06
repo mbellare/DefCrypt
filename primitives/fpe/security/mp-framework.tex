@@ -1,0 +1,85 @@
+%!TEX root = ../fpe.tex
+
+\heading{Message Privacy Framework.}
+Another primary security notion considered significant for FPE schemes is that of message privacy (MP), which measures the ability of an adversary to discover some function of the plaintext.\ref{SAC:BRRS09} If the function is the identity function (i.e. the adversary is expected to recover the entire message), the related security notion is called message recovery (MR).
+
+MP and MR are significant for FPE schemes due to the reasons one would use FPE (e.g. to prevent adversaries from being able to decrypt real-world data \ref{HPE:2017}). Moreover, MP and MR also allow one to potentially achieve a tighter upper bound on an adversary's advantage than one could exclusively with PRP.\
+
+\figref{fig-fpe-mpf} presents two games, $\gMPF{}$ and $\gMGF{}$, which together outline a generic framework for MP security associated to FPE scheme $\FPE$ and sampler $\sampW$. These games can be seen as a framework because different classes of sampler $\choice{\sampW}$ allow for different types of attack (e.g. static versus adaptive).
+
+Sampler $\sampW$ consists of an integer variable and three algorithms:
+
+\begin{itemize}
+	\item $\nq{\sampW}$, which represents an integer that specifies the number of queries that the adversary is allowed to make to its oracle,
+	\item $\tg{\sampW}$, the "target generator," which outputs a four-tuple consisting of a target tweak, a target message, state $\sigma$ (which is shared with $\choice{\sampW}$), and any leakage $\ell$ that is given to the adversary, 
+	\item $\choice{\sampW}$, used within the oracles, which can be defined to impede or allow various queries from the adversary in order to restrict the adversary to various classes, such as static or adaptive, as mentioned above, and 
+	\item $\func{\sampW}$, which defines the function that will be applied to the target message.
+\end{itemize}
+
+In the game $\gMPF{}$, adversary $\advA$ has access to an encryption oracle $\EncO$, while in the game $\gMGF{}$, the simulator $\sampS$ has access only to an oracle $\EqO$, which only confirms or denies whether a particular tweak-message pair equals the target tweak-message pair. For simplicity, both oracles require that all the queried tweak-message pairs must be distinct.\
+ 
+ The adversary's advantage is defined as: 
+\begin{newmath}
+\mpAdv{\FPE, W}{\advA} = \Pr[\gMPF{\FPE, W}(\advA)]- \max_{\sampS\in \setfont{S}}\Pr[\gMGF{\FPE, W}(\sampS)],
+\end{newmath}
+ where $\setfont{S}$ is the set of all simulators.
+
+\begin{figure} [t]
+\begin{center}
+\fbox
+{
+\begin{pchstack}
+\procedure{Game $\gMPF{\FPE, \sampW}(\advA)$}
+  {
+    \key \getsr \Keys{\FPE} \\
+    (T^*, \msg^*, \sigma, \ell) \getsr \tg{\sampW} \\ 
+	Y^* \gets \Enc{\FPE}(\key, T^*, \msg^*) \\
+    Q \gets \emptyset \\
+    X \getsr \advA^{\EncO}(Y^*, \ell)  \\
+    \pcreturn (X = \func{\sampW}(\msg^*))
+  }
+    \pchspace
+    
+\procedure{Oracle $\EncO(\mu)$}
+  {
+    (T, \msg, \sigma, \ell) \getsr \choice{\sampW}(\mu, \sigma) \\
+    \pcif (T, \msg) \in Q \pcor |Q| \geq \nq{\sampW} \pcthen \\
+    \t \pcreturn \bot \\
+    Q \gets Q \cup \{(T, \msg)\} \\
+    Y\gets \Enc{\FPE}(\key,T,\msg)  \\
+    \pcreturn (Y, \ell)
+  }
+\end{pchstack}
+}
+\end{center}
+\vspace{-2ex}
+\begin{center}
+\fbox
+{
+\begin{pchstack}
+\procedure{Game $\gMPG{\FPE, \sampW}(\sampS)$}
+  {
+    (T^*, \msg^*, \sigma, \ell) \getsr \tg{\sampW} \\ 
+    Q \gets \emptyset \\
+    X \getsr \sampS^{\EqO}(\ell)  \\
+    \pcreturn (X = \func{\sampW}(\msg^*))
+  }
+    \pchspace
+  
+\procedure{Oracle $\EqO(\mu)$}
+  {
+    (T, \msg, \sigma, \ell) \getsr \choice{\sampW}(\mu, \sigma) \\
+    \pcif (T, \msg) \in Q \pcor |Q| \geq \nq{\sampW} \pcthen \\
+    \t \pcreturn \bot \\
+    Q \gets Q \cup \{(T, \msg)\} \\
+    B \gets ((T^*, \msg^*) = (T, \msg)) \\
+    \pcreturn (B, \ell)
+  }
+\end{pchstack}
+}
+\end{center}
+\vspace{-2ex}
+\caption{ Games defining mp security of format-preserving encryption scheme $\FPE$.}
+\label{fig-fpe-mpf}
+\hrulefill
+\end{figure}
