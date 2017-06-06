@@ -3,15 +3,39 @@
 % ==================================================================
 % Document
 % ==================================================================
-
 \newcommand{\FPE}{\schemefont{FPE}}
-\newcommand{\D}{\schemefont{D}}
+\newcommand{\F}{\schemefont{F}}
 \newcommand{\gPRP}[1]{\game{prp}{#1}}
 \newcommand{\prpAdv}[2]{\genAdv{prp}{#1}{#2}}
+\newcommand{\spiAdv}[2]{\genAdv{spi}{#1}{#2}}
 \newcommand{\gMR}[1]{\game{mr}{#1}}
 \newcommand{\gMG}[1]{\game{mg}{#1}}
+\newcommand{\gMPG}[1]{\game{mpg}{#1}}
+\newcommand{\gMPF}[1]{\game{mpf}{#1}}
+\newcommand{\gMGF}[1]{\game{mgf}{#1}}
+\newcommand{\gSPI}[1]{\game{spi}{#1}}
+\newcommand{\gMP}[1]{\game{mp}{#1}}
 \newcommand{\mrAdv}[2]{\genAdv{mr}{#1}{#2}}
+\newcommand{\mpAdv}[2]{\genAdv{mp}{#1}{#2}}
 \newcommand{\EqO}{\procfont{Eq}}
+\newcommand{\ChO}{\procfont{Ch}}
+\newcommand{\choice}[1]{\schalg{#1}{Choose}}
+\newcommand{\tg}[1]{\schalg{#1}{TG}}
+\newcommand{\guess}[1]{\schalg{#1}{Guess}}
+\newcommand{\dist}[1]{\schalg{#1}{Dist}}
+\newcommand{\func}[1]{\schalg{#1}{Func}}
+\newcommand{\chset}{\mathsf{chset}}
+\newcommand{\sampW}{\advfont{W}}
+
+\newcommand{\nt}[1]{\schalg{#1}{nt}}
+\newcommand{\nm}[1]{\schalg{#1}{nm}}
+\newcommand{\nq}[1]{\schalg{#1}{nq}}
+
+\newcommand{\vecM}{\mathbf{M}}
+\newcommand{\vecT}{\mathbf{T}}
+\newcommand{\vecY}{\mathbf{Y}}
+
+\newcommand{\pcor}{\textbf{\text{ or }}}
 
 \begin{document}
 
@@ -24,9 +48,11 @@
     \subsection{Syntax}
         \input{primitives/fpe/syntax/fpe-syn}
     \subsection{Security}
-        \input{primitives/fpe/security/prp}
-        \input{primitives/fpe/security/mr}
-
+        \input{primitives/fpe/security/prp}  		 \input{primitives/fpe/security/spi}
+        \input{primitives/fpe/security/mp-framework}
+        \input{primitives/fpe/security/mp-variations}
+        \input{primitives/fpe/security/relations}
+        
 \onlyinsubfile
 {
     \addcontentsline{toc}{section}{References}
