@@ -1,9 +1,9 @@
 %!TEX root = ../fpe.tex
 
 \heading{Message Privacy Framework.}
-Another primary security notion considered significant for FPE schemes is that of message privacy (MP), which measures the ability of an adversary to discover some function of the plaintext.\ref{SAC:BRRS09} If the function is the identity function (i.e. the adversary is expected to recover the entire message), the related security notion is called message recovery (MR).
+Another primary security notion considered significant for FPE schemes is that of message privacy (MP), which measures the ability of an adversary to discover some function of the plaintext.\cite{EPRINT:BRRS09} If the function is the identity function (i.e. the adversary is expected to recover the entire message), the related security notion is called message recovery (MR).
 
-MP and MR are significant for FPE schemes due to the reasons one would use FPE (e.g. to prevent adversaries from being able to decrypt real-world data \ref{HPE:2017}). Moreover, MP and MR also allow one to potentially achieve a tighter upper bound on an adversary's advantage than one could exclusively with PRP.\
+MP and MR are significant for FPE schemes due to the reasons one would use FPE (e.g. to prevent adversaries from being able to decrypt real-world data \cite{HPE:2017}). Moreover, MP and MR also allow one to potentially achieve a tighter upper bound on an adversary's advantage than one could exclusively with PRP.\
 
 \figref{fig-fpe-mpf} presents two games, $\gMPF{}$ and $\gMGF{}$, which together outline a generic framework for MP security associated to FPE scheme $\FPE$ and sampler $\sampW$. These games can be seen as a framework because different classes of sampler $\choice{\sampW}$ allow for different types of attack (e.g. static versus adaptive).
 

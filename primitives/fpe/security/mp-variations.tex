@@ -1,7 +1,9 @@
+%!TEX root = ../fpe.tex
+
 \heading{Message Privacy Variations.}
 As mentioned above, different classes of $\sampW$ give rise to different types of attack.
 
-To specify an adaptive chosen-plaintext attack, one may, for instance, define $\choice{\sampW}$ to merely output the tweak-message pair with which $\advA$ has queried the oracle as shown in \figref{fig-fpe-ch}. (Here $\epsilon$ is the empty string, because there is nothing for $\sampW$ to leak to $\advA$.) On the other hand, to define a static adversary, $\choice{\sampW}$ could produce its output independently of its input $\mu$. By varying what $\choice{\sampW}$ leaks via $\ell$ we can capture known-plaintext attacks, unknown-plaintext attacks, and variations thereof.
+To specify an adaptive chosen-plaintext attack, one may, for instance, define $\choice{\sampW}$ to merely output the tweak-message pair with which $\advA$ has queried the oracle as shown in \figref{fig-fpe-ch}. (Here $\epsilon$ is the empty string, because there is nothing for $\sampW$ to leak to $\advA$.) On the other hand, to define a static adversary, $\choice{\sampW}$ could produce its output independently of its input $\mu$. Also, by varying what $\choice{\sampW}$ leaks via $\ell$ we can capture known-plaintext attacks, unknown-plaintext attacks, and variations thereof.
 
 \begin{figure} [t]
 \begin{center}
