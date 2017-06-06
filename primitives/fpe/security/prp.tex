@@ -5,12 +5,12 @@ One of the primary security notions considered for FPE schemes is that of pseudo
 
 This is formalized by the game $\gPRP{}$ shown in \figref{fig-fpe-prp}, associated to FPE scheme $\FPE$ and adversary $\advA$. 
  The game initially samples a random challenge bit $b$, with $b=1$ indicating it is in ``real'' mode and $b=0$ that it is in ``random" mode.
- As per our conventions noted in \secref{sec-defs},  the tables $T$ and $R$ are intialized to $\bot$ everywhere.
- Now the adversary $\advA$ also has access to an evaluation oracle $\FnO$ that takes an input a nonce $\nonce$ and message $\msg$.
-For a new $\nonce,\msg$ the oracle either returns a uniformly random element from $\Dom{\FF}$ which have not previously been returned (for $b=0$), or an evaluation under $\Enc{\FF}$ (for $b=1$).
-That is, $\FnO$ is either a random permutation for each choice of $\nonce$ or $\Enc{\FPE}$ with a random secret key.
+ As per our conventions noted in \secref{sec-defs},  the tables $U$ and $R$ are initialized to $\bot$ everywhere.
+ Now the adversary $\advA$ also has access to an evaluation oracle $\FnO$ that takes an input a nonce $T$ and message $\msg$.
+For a new $T,\msg$ the oracle either returns a uniformly random element from $\Dom{\FPE}$ which have not previously been returned (for $b=0$), or an evaluation under $\Enc{\FPE}$ (for $b=1$).
+That is, $\FnO$ is either a random permutation for each choice of $T$ or $\Enc{\FPE}$ with a random secret key.
 As a last step, the adversary outputs a bit $b'$ that can be viewed as a guess for $b$. 
- The advantage of adversary $\advA$ in breaking the prp security of  $\FPE$ is defined as $\prpAdv{\FPE}{\advA} = 2\Pr[\gPRP{\FPE}(\advA)]- 1$.
+ The advantage of adversary $\advA$ in breaking the prp security of $\FPE$ is defined as $\prpAdv{\FPE}{\advA} = 2\Pr[\gPRP{\FPE}(\advA)]- 1$.
 
 \begin{figure} [t]
 \begin{center}
@@ -19,23 +19,23 @@ As a last step, the adversary outputs a bit $b'$ that can be viewed as a guess f
 \begin{pchstack}
 \procedure{Game $\gPRP{\FPE}(\advA)$}
   {
-    b \getsr \bits
-    \key \getsr \Kg{\FPE}(\secIn)  \\
-    b' \getsr \advA^{\RoRO}(\secIn)  \\
+    b \getsr \bits\\
+    \key \getsr \Keys{\FPE}  \\
+    b' \getsr \advA^{\FnO}  \\
     \pcreturn (b' = b)
   }
   
     \pchspace
     
-\procedure{Oracle $\FnO(\nonce,\msg)$}
+\procedure{Oracle $\FnO(T,\msg)$}
   {
-    \pcif (R[\nonce] =\bot) \pcthen  R[\nonce]\gets \emptyset\\
-    \pcif (T[\nonce,\msg] =\bot) \pcthen  \\
-    \t T[\nonce,\msg] \getsr \Dom{\FPE}\setminus R[\nonce] \\
-    \t R[\nonce] \gets  R[\nonce]\cup\sett{T[\nonce,\msg]}\\
-    \pcfi \\
-    y_1\gets \Enc{\FPE}(\key,\nonce,\msg)  \\
-    y_0\getsr T[\nonce,\msg] \\
+    \pcif (R[T] =\bot) \pcthen \\
+    \t R[T]\gets \emptyset\\
+    \pcif (U[T,\msg] =\bot) \pcthen  \\
+    \t U[T,\msg] \getsr \Dom{\FPE}\setminus R[T] \\
+    \t R[T] \gets  R[T]\cup\sett{U[T,\msg]}\\
+    y_1\gets \Enc{\FPE}(\key,T,\msg)  \\
+    y_0\gets U[T,\msg] \\
    \pcreturn y_b
   }
 \end{pchstack}
