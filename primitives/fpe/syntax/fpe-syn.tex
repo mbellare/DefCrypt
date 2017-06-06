@@ -1,6 +1,6 @@
 %!TEX root = ../fpe.tex
 
-A format-preserving encryption (FPE) scheme specifies the following: \ref{SAC:BRRS09}
+A format-preserving encryption (FPE) scheme specifies the following: \cite{EPRINT:BRRS09}
 \begin{itemize}
 	\item A set of keys $\Keys{\FPE}$.
 	\item A tweak-space $\TS{\FPE}$.
@@ -17,6 +17,6 @@ The term ``format-preserving'' refers to the fact that ciphertexts must be in th
 
 Note that tweakable block ciphers are a subset of FPE schemes, where the domain is defined as bit strings of some length. Although tweaks are not strictly necessary for an implementation of FPE (i.e. $\TS{\FPE}$ can be the empty set), they can provide greater security. \
 
-The definition of FPE in \ref{SAC:BRRS09} allows for the inclusion of more than one "slice" (i.e. type of format) in a particular FPE scheme. For simplicity, we have restricted the definition to one slice per scheme. \
+The definition of FPE in \cite{EPRINT:BRRS09} allows for the inclusion of more than one "slice" (i.e. type of format) in a particular FPE scheme. For simplicity, we have restricted the definition to one slice per scheme. \
 
-FPE schemes, being block ciphers, can be defined asymptotically \ref{SAC:BRRS09}, in which case $\Enc{\FPE}$ would be the functional equivalent of $\Ev{\F}$ and $\Dec{\FPE}$ would be the functional equivalent of $\Inv{\F}$ as specified in as in \ref{sec-defs}. However, we have instead used concrete security in our definitions because concrete security is more well-suited for real-world applications than asymptotics, and FPE was designed specifically for real-world use in data security.
+FPE schemes, being block ciphers, can be defined asymptotically \cite{EPRINT:BRRS09}, in which case $\Enc{\FPE}$ would be the functional equivalent of $\Ev{\F}$ and $\Dec{\FPE}$ would be the functional equivalent of $\Inv{\F}$ as specified in as in Section \ref{sec-defs}. However, we have instead used concrete security in our definitions because concrete security is more well-suited for real-world applications than asymptotics, and FPE was designed specifically for real-world use in data security.
