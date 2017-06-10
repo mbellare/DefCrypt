@@ -22,7 +22,9 @@
 
 \usepackage{defcrypt}
 \usepackage{cryptocode}
-
+\title{All-Or-Nothing-Transforms (AONTs)}
+\date{\today}
+\author{Ruth Ng}
 
 % ==================================================================
 % Document
@@ -31,7 +33,11 @@
 \begin{document}
     \renewcommand{\onlyinsubfile}[1]{}
     \renewcommand{\notinsubfile}[1]{#1}
-  
+
+\maketitle
+
+\emph{Sections 1 to 6 were written in preparation for my presentation. Section 7 onwards are made up of comments and additions made after in-class discussions. }
+ 
 \section{Syntax}
 
 An \emph{All-Or-Nothing-Transform} $\schemefont{AONT}$ specifies two algorithms $(\schemefont{AONT.Transform}, \schemefont{AONT.Inverse})$, and a block length $\schemefont{AONT.bl}$. Then, we can associate with $\mathsf{AONT}$ a domain and range, $\mathsf{AONT.Dom}, \mathsf{AONT.Rng}\subset \{\bits^\schemefont{AONT.bl}\}^*$(the set of strings having length that is a multiple of $\mathsf{AONT.bl}$). We call the domain the ``message sequences'' and the range the ``pseudo-message sequences''. Then, we have that $\mathsf{AONT.Transform}: \mathsf{AONT.Dom}\rightarrow \mathsf{AONT.Rng}$, a randomized algorithm, and  $\mathsf{AONT.Inverse}: \mathsf{AONT.Rng}\rightarrow \mathsf{AONT.Dom}$, a deterministic algorithm. 
@@ -329,7 +335,48 @@ $\Return (X||0^\mathsf{AONT.bl})$\\
 }
 \end{figure}
 
-Then we have that $\textbf{Adv}^\text{aont-lr}_{\mathsf{Package},\mathsf{Package.bl}}(\advA)=1$, by the correctness condition of the AONT. One can note that the $A$ runs in time proportional to the running time of $\mathsf{Package.Inverse}$, which should be PT in any usable AONT. 
+Then we have that $\textbf{Adv}^\text{aont-lr}_{\mathsf{Package},\mathsf{Package.bl}}(\advA)=1$, by the correctness condition of the AONT. One can note that the $A$ runs in time proportional to the running time of $\mathsf{Package.Inverse}$, which should be PT in any usable AONT. Note that the padding of $0^\mathsf{AONT.bl}$ in the circuit is for convenience since the output of $\mathsf{Inverse}$ is only 1 block long, while the input to it is 3 blocks. 
+
+\emph{From class, this argument assumes the existence of random oracles. Which, if we do, makes this definitions slightly more like the one in section 7 instead. Therefore, I'm not entirely sure how much this counterexample matters/ holds up}
+
+\section{Trivial Attack on LR Model} 
+
+As discussed in class, in a similar vein to the adversary in the previous subsection, we can construct an adversary for an arbitrary AONT which makes it not even $\mathsf{1-AONT-LR}$ secure (and by extension not $\mathsf{m-AONT-LR}$ secure for any $m$. Consider the following adversary $\advA$:
+
+\begin{figure}[H]
+\oneCol{0.7}
+{
+\underline{$\advA^\LRO$}
+
+\begin{algorithm}[H]
+$X \getsr \LRO(0^\mathsf{AONT.bl},1^\mathsf{AONT.bl},C)$\\
+\Return $X$
+\end{algorithm}
+
+\underline{C(X)}
+
+\begin{algorithm}[H]
+$Y\gets\mathsf{Package.Inverse}(X)$\\
+$\Return (Y\mathrel{\&} 1)$\\
+\end{algorithm}
+}
+\end{figure}
+
+Then we have that 
+
+\begin{align*}
+&\textbf{Adv}^\text{aont-lr}_{\mathsf{Package},\mathsf{Package.bl}}(\advA)\\
+&=2\cdot\Prob{\gamefont{G}_{\mathsf{AONT},m}^\text{lr}(\advA)} - 1\\
+&=\condProb{\gamefont{G}_{\mathsf{AONT},m}^\text{lr}(\advA)}{b=1} - \condProb{\gamefont{G}_{\mathsf{AONT},m}^\text{lr}(\advA)}{b=0}\\
+&=1 - 0 = 1\\
+&\text{(By the correctness condition)}\\
+\end{align*}
+
+\section{Improvement to the LR Model}
+
+We discussed improving the model by allowing a random oracle to $\mathsf{Transform}$ and $\mathsf{Inverse}$, which is not provided to the circuits. This will allow for $\mathsf{Transform, Inverse}$ algorithms that the circuits cannot simulate fully. 
+
+The intuition behind this is that the LR model considers a side-channel attack. The ``circuits'', in real life, will not be performing complex hashing or block ciphers when they leak information, given that most of the information comes in the form of power analysis and other similar side channels. 
 
 \end{document}
 
