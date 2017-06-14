@@ -53,10 +53,30 @@
 \end{figure}
 
 \heading{Pseudorandom functions.}
-...
+Consider game $\gPRF{\FF,\advA}(\secParam)$ of \figref{fig-ff-prf} associated to a function family $\FF$ and an adversary $\advA$.
+The game samples a challenge bit $b$, and runs $\Kg{\FF}$ to generate a function key $\FKey$.
+It gives the adversary a real-or-random oracle $\RoRO$ that takes an input $x\in\Dom{\FF}(\secParam,\FKey)$.
+The oracle returns $\Ev{\FF}(\secIn,\FKey,x)$ if $b=1$, or a uniformly random value from $\Rng{\FF}(\secParam,\FKey)$ if $b=0$.
+The adversary has to guess the value of $b$.
+\begin{defn}
+  Let $\FF$ be a function family.
+  For all adversaries $\advA$ and all $\secParam\in\N$, let $\prfAdv{\FF,\advA}{\secParam}=\Pr[\gPRF{\FF,\advA}(\secParam)]$ be the advantage of $\advA$ in breaking the pseudo-randomness of $\FF$.
+  We say that $\FF$ is pseudorandom (a PRF) if $\prfAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$.
+\end{defn}
+The pseudo-randomness of function families was defined by Goldreich, Goldwassed and Micali~\cite{GolGolMic86}.
 
 \heading{Punctured pseudorandom functions.}
-...
+Consider game $\gPPRF{\FF,\advA}(\secParam)$ of \figref{fig-ff-prf} associated to a function family $\FF$ and an adversary $\advA$.
+The game samples a challenge bit $b$, and runs $\Kg{\FF}$ to generate a function key $\FKey$.
+It gives the adversary an oracle $\FnO$ that takes an input $x^*\in\Dom{\FF}(\secParam,\FKey)$.
+The oracle returns a ``punctured'' function key $\PFKey$, punctured at $x^*$, and a challenge value that is either $\Ev{\FF}(\secIn,\FKey,x^*)$ (if $b=1$) or a uniformly random value from $\Rng{\FF}(\secParam,\FKey)$ (if $b=0$).
+The adversary is only allowed to call $\FnO$ once and it has to guess the value of $b$.
+\begin{defn}
+  Let $\FF$ be a function family.
+  For all adversaries $\advA$ and all $\secParam\in\N$, let $\pprfAdv{\FF,\advA}{\secParam}=\Pr[\gPPRF{\FF,\advA}(\secParam)]$ be the advantage of $\advA$ in breaking the punctured pseudo-randomness of $\FF$.
+  We say that $\FF$ is pseudorandom (a PPRF) if $\pprfAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$.
+\end{defn}
+The notion of punctured PRFs was concurrently and independently introduced in \cite{AC:BonWat13,CCS:KPTZ13,PKC:BoyGolIva14}.
 
 \iffalse
 \heading{Pseudorandom Function}

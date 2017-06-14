@@ -15,6 +15,8 @@ The correctness of punctured evaluation requires that $\PEv{\FF}(\secIn, \PFKey,
   all $x^*\in\Dom{\FF}(\secParam, \FKey)$,
   all $\PFKey\in[\PKg{\FF}(\secIn, \FKey, x^*)]$
   and all $x\in\Dom{\FF}(\secParam, \FKey)\setminus\{x^*\}$.
+Puncturable function families is a special case of constrained function families.
+These notions were concurrently and independently introduced in \cite{AC:BonWat13,CCS:KPTZ13,PKC:BoyGolIva14}.
 
 \heading{Trapdoor function families.} 
 A \emph{trapdoor} function family $\FF$ specifies additional PT algorithms $\TKg{\FF}$ and $\TInv{\FF}$.
@@ -29,6 +31,7 @@ Let $\Keys{\FF}$ be the parameterized set such that $\Keys{\FF}(\secParam) = [\K
 We say that $\Keys{\FF}$ is the key space of $\FF$, $\Dom{\FF}$ is the domain of $\FF$, and $\Rng{\FF}$ is the range of $\FF$.
 Let $\kl{\FF},\il{\FF},\ol{\FF}\colon\N\to\N$. 
 We say that $\kl{\FF}$ is the key length of $\FF$, $\il{\FF}$ is the input length of $\FF$, and $\ol{\FF}$ is the output length of $\FF$ if $\Keys{\FF}(\secParam) = \bits^{\kl{\FF}(\secParam)}$, $\Dom{\FF}(\secParam,\FKey) = \bits^{\il{\FF}(\secParam)}$, and $\Rng{\FF}(\secParam, \FKey) = \bits^{\ol{\FF}(\secParam)}$ for all $\secParam\in\N$ and all $\FKey\in[\Kg{\FF}(\secParam)]$, respectively.
+One can further specify the notion of the pre-image size of a function family, and use it to define what does it mean for a function family to be injective or to have a polynomial pre-image size (e.g.~see~\cite{AC:BelSteTes14}).
 
 \heading{Block ciphers.}
 Let $\FF$ be a function family with input length $\il{\FF}$ and output length $\ol{\FF}$, such that $\il{\FF}=\ol{\FF}$.
@@ -36,21 +39,14 @@ Function family $\FF$ is a block cipher if it specifies an additional PT algorit
 Inverse evaluation algorithm $\Inv{\FF}$ takes $\secIn$, $\FKey\in[\Kg{\FF}(\secIn)]$ and an output $y\in\Rng{\FF}(\secParam, \FKey)$ to return an input $x\in\Dom{\FF}(\secParam. \FKey)$.
 The correctness of inverse evaluation requires that $\Inv{\FF}(\secIn, \FKey, \Ev{\FF}(\secIn, \FKey, x)) = x$ for all $\secParam\in\N$, all $\FKey\in[\Kg{\FF}(\secIn)]$, and all $x\in\Dom{\FF}(\secParam, \FKey)$.
 
+\iffalse
 \heading{Input- and output- sampleable function families.}
 An input-sampleable function family $\FF$ specifies additional PT algorithm $\Is{\FF}$.
 This algorithm takes $\secIn$, a function key $\FKey\in[\Kg{\FF}(\secParam)]$ to return an input $x\in\Dom{\FF}(\secParam,\FKey)$.
 An output-sampleable function family $\FF$ specifies additional PT algorithm $\Os{\FF}$.
 This algorithm takes $\secIn$, a function key $\FKey\in[\Kg{\FF}(\secParam)]$ to return an output $y\in\Rng{\FF}(\secParam,\FKey)$.
 
-\heading{Other primitives and extensions.}
-Puncturable function families is a special case of constrained function families.
-These notions were concurrently and independently introduced in \cite{AC:BonWat13,CCS:KPTZ13,PKC:BoyGolIva14}.
 
-It can be useful to consider different types of function families.
-For example, one can specify the notion of the pre-image size of a function family, and use it to define what does it mean for a function family to be injective or to have a polynomial pre-image size (e.g.~see~\cite{AC:BelSteTes14}).
-
-
-\iffalse
 \heading{Function families.}
 We say that $\FF$ is injective if the function $\FEv(\secIn,\FKey,\cdot)\Colon\FInpSet(\secParam)\to\FOutSet(\secParam)$ is injective for all $\secParam\in\N$ and $\FKey\in [\FKg(\secIn)]$.
 	

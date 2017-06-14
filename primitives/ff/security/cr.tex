@@ -44,15 +44,15 @@ The game runs $\Kg{\FF}$ to generate a function key $\FKey$, and gives it to the
 The adversary wins the game if it can find two distinct inputs such that function $\Ev{\FF}(\secIn,\FKey,\cdot)$ maps them to the same output.
 \begin{defn}
   Let $\FF$ be a function family.
-  $\FF$ is collision-resistant if $\crAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$,
-  where $\crAdv{\FF,\advA}{\secParam}=\Pr[\gCR{\FF,\advA}(\secParam)]$ for all $\secParam\in\N$.
+  For all adversaries $\advA$ and all $\secParam\in\N$, let $\crAdv{\FF,\advA}{\secParam}=\Pr[\gCR{\FF,\advA}(\secParam)]$ be the advantage of $\advA$ in breaking the collision-resistance of $\FF$.
+  We say that $\FF$ is collision-resistant if $\crAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$.
 \end{defn}
 
 \heading{Target collision-resistant functions.}
 Consider game $\gTCR{\FF,\advA}(\secParam)$ of \figref{fig-ff-tcr} associated to a function family $\FF$ and an adversary $\advA$.
 The game runs $\Kg{\FF}$ to generate a function key $\FKey$ and subsequently samples a uniformly random input value $x_0$ from the domain of function $\Ev{\FF}(\secIn, \FKey, \cdot)$.
 The adversary gets $\FKey,x_0$ as input.
-It wins the game if it can produce another input value $x_1$ such that it is distinct from $x_0$ and such that function $\Ev{\FF}(\secIn, \FKey, \cdot)$ maps both inputs values to the same output value.
+It wins the game if it can produce another input value $x_1$ such that $x_0$ and $x_1$ are distinct, and function $\Ev{\FF}(\secIn, \FKey, \cdot)$ maps inputs $x_0$, $x_1$ to the same output value.
 \begin{defn}
   Let $\FF$ be a function family.
   $\FF$ is target collision-resistant if $\tcrAdv{\FF,\advA}{\cdot}$ is negligible for all PT adversaries $\advA$,
@@ -60,6 +60,6 @@ It wins the game if it can produce another input value $x_1$ such that it is dis
 \end{defn}
 Target collision-resistant hash functions were introduced by Naor and Yung~\cite{STOC:NaoYun89} under the name of Universal One-Way Hash Functions (UOWHF).
 Bellare and Rogaway~\cite{C:BelRog97} redefined the corresponding security notion under the name of target collision-resistance.
-
-\heading{Other security notions.}
-...
+We note that the standard definition of target collision-resistance is formalized in a different way from ours; it would require that adversary $\advA$ produces an input $x_0$ prior to seeing the function key.
+Our definition of function families does not allow to do this, because for every $\secParam\in\N$ and for every $\FKey\in[\Kg{\FF}(\secIn)]$ the function $\Ev{\FF}(\secIn,\FKey,\cdot)$ is defined to take inputs from a set $\Dom{\FF}(\secParam,\FKey)$ that depends on $\FKey$.
+Therefore, we provided an alternative definition for target collision-resistance.
